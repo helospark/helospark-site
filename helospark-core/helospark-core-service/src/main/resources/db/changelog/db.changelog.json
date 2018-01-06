@@ -1,0 +1,90 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "1",
+        "author": "helospark",
+        "changes": [
+          {
+            "sql": {
+              "comment": "Create categories table",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "create table article_category (id int NOT NULL, name varchar(40) NOT NULL, icon_class varchar(40), PRIMARY KEY (id))",
+              "stripComments": true
+            }
+          },
+          {
+            "sql": {
+              "comment": "Fill categories with data",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "insert into article_category (id,name,icon_class) VALUES (1, 'computer', 'fa-laptop'), (2, 'electronics', 'fa-plug'), (3, 'blog', 'fa-rss-square')",
+              "stripComments": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "changeSet": {
+        "id": "2",
+        "author": "helospark",
+        "changes": [
+          {
+            "sql": {
+              "comment": "Create article detail table",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "create table article_detail (id int NOT NULL, modification_time DATETIME NOT NULL, description VARCHAR(2000) NOT NULL, data LONGBLOB NOT NULL, PRIMARY KEY (id))",
+              "stripComments": true
+            }
+          },
+          {
+            "sql": {
+              "comment": "Create article table",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "create table article (id int NOT NULL, creation_time DATETIME NOT NULL, category_id int NOT NULL, details_id int NOT NULL, PRIMARY KEY (id), FOREIGN KEY (category_id) REFERENCES article_category(id), FOREIGN KEY (details_id) REFERENCES article_detail(id))",
+              "stripComments": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "changeSet": {
+        "id": "3",
+        "author": "helospark",
+        "changes": [
+          {
+            "sql": {
+              "comment": "Add urlId field to article",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "ALTER TABLE article ADD COLUMN url_id VARCHAR(255)",
+              "stripComments": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "changeSet": {
+        "id": "4",
+        "author": "helospark",
+        "changes": [
+          {
+            "sql": {
+              "comment": "Add title field to article",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "ALTER TABLE article ADD COLUMN title VARCHAR(255)",
+              "stripComments": true
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

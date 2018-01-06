@@ -1,0 +1,10 @@
+
+<a id="home" href="" class="${item.cssClass} ${fn:toUpperCase(menuPage) == fn:toUpperCase(currentPage) ? 'current' : ''}"><span class="fa fa-home"></span><span class="menu-item-name">Home</span></a>
+
+<ng-container *ngFor='let menuItem of menuItems'>
+    <a id="{{menuItem.name}}" [routerLink]="['category', menuItem.name]"><span class="fa {{menuItem.iconClass}}"></span><span class="menu-item-name">{{menuItem.name}}</span></a>
+</ng-container>
+<a id="gallery" href="#" class="${item.cssClass} ${fn:toUpperCase(menuPage) == fn:toUpperCase(currentPage) ? 'current' : ''}"><span class="fa fa-home"></span><span class="menu-item-name">Gallery</span></a>
+<a id="firework" href="#" class="${item.cssClass} ${fn:toUpperCase(menuPage) == fn:toUpperCase(currentPage) ? 'current' : ''}"><span class="fa fa-home"></span><span class="menu-item-name">Firework</span></a>
+
+<a id="blog" href="#" class="${item.cssClass} ${fn:toUpperCase(menuPage) == fn:toUpperCase(currentPage) ? 'current' : ''}"><span class="fa fa-home"></span><span class="menu-item-name">About</span></a>

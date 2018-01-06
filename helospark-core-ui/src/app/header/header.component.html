@@ -1,0 +1,59 @@
+<div id="header">
+    <div id="site_title" class="unselectable">
+      <a href="#" class="unselectable">Technology Blog</a>
+    </div>
+<!--    <c:if test="${heloPageModel.numberOfUnreadMessages != 0}">
+      <c:url value="${heloPageModel.listPrivateMessagesUrl}" var="listPrivateMessagesUrl"/>
+      <a href="${listPrivateMessagesUrl}" title="Unread messages">
+          <span class="unread-mail">
+            <c:url value="/resources/images/message.jpg" var="mailUrl"/>
+            <img src="${mailUrl}" />
+            <span class="number-of-unread-mail">${heloPageModel.numberOfUnreadMessages}</span>
+          </span>
+      </a>
+    </c:if>
+  -->
+    <div id="header_right">
+      <div id="newsletter_box">
+      <!--  <c:if test="${currentPage != 'login'}">
+          <sec:authorize access="isAnonymous()">-->
+
+            <form action="/login" method="post">
+              <input type="text" id="username" name="username" class="text-input" placeholder="username" />
+              <br />
+              <input type="password" id="password" name="password" class="text-input" placeholder="password" autocomplete="off" />
+              <input type="checkbox" id="remember-me" name="remember-me" checked="checked" hidden="true" />
+              <br />
+              <div id="submit-container">
+                <button type="submit" class="btn btn-primary" type="submit" name="submit" id="submit">Log in</button>
+                <a href="/register" class="btn btn-primary pull-right">Register</a>
+              </div>
+            </form>
+       <!--   </sec:authorize>
+          <sec:authorize access="not isAnonymous()">
+            Logged in as <sec:authentication property="principal.username" />
+                    <div>
+                      <c:url value="/user/profile/edit" var="profileUrl" />
+                      <a href="${profileUrl}">Edit profile</a>
+                    </div>
+                    <div>
+                      <c:url value="/user/profile/change-password" var="changePasswordUrl" />
+                      <a href="${changePasswordUrl}">Change password</a>
+                    </div>
+                    <div>
+                      <c:url var="logoutUrl" value="/logout" />
+                      <a href="${logoutUrl}">Log out</a>
+                    </div>
+          </sec:authorize>
+        </c:if>
+      -->
+      </div>
+    </div>
+    <div class="cleaner"></div>
+    <div id="menu_wrapper">
+      <div id="menu">
+        <app-menu></app-menu>
+      </div>
+    </div>
+   <!-- <tiles:insertAttribute name="message"></tiles:insertAttribute> -->
+  </div>

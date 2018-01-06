@@ -1,0 +1,17 @@
+server:
+  servlet:
+    context-path: "/api"
+spring:
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog.json
+  datasource:
+    url: jdbc:mysql://localhost:3306/helospark_core
+    username: helospark-development
+    password: test
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+article:
+  list:
+    pagesize: 10

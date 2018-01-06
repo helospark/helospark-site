@@ -1,0 +1,54 @@
+.post_box img {
+	width: 125px;
+	float: left;
+	margin-right: 30px;
+}
+
+.comment, .edit, .delete {
+	display: inline-block;
+	margin-left: 30px;
+}
+
+.post_box {
+	clear: both;
+	padding-bottom: 30px;
+	margin-bottom: 30px;
+	overflow:hidden;
+}
+
+.pb_last {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+.post_box {
+	position: relative;
+	margin-bottom: 10px;
+}
+
+.article-header {
+	color: #fff;
+	font-size: 16pt;
+	margin-bottom: 10px;
+}
+
+.article-header:hover {
+	text-decoration: underline;
+}
+
+.article-description {
+	color: #aaa;
+	font-size: 8pt;
+	margin-bottom: 3px;
+}
+
+.tags {
+	margin-bottom: 5px;
+}
+
+/* @media screen and (max-width: 625px) { */
+/*     .article-description { */
+/*         font-size: 14pt; */
+/*     } */
+/* } */
