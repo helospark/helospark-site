@@ -1,20 +1,32 @@
-<div *ngFor="let article of articles">
-
-  <div class="post_box" [routerLink]="['category', categoryName, 'article', article.articleId]">
-    <div class="float_l">
-      <img *ngIf="!!article.thumbnailUrl" src="{{article.thumbnailUrl}}" alt="{{article.title}} thumbnail image" />
-      <img *ngIf="!article.thumbnailUrl" src="assets/images/noImage.jpg" alt="{{article.title}} thumbnail image" />
-    </div>
-    <div class="texts">
-      <div class="article-header">
-        {{article.title}}
-      </div>
-      <div class="article-description">{{article.description}}</div>
-    </div>
-    <div class="article-footer">
-      Created by (TODO)
-      <span class="timeago" title="{{article.creationTime}}"></span> ({{article.creationTime | date: 'yyyy-MM-dd hh:mm:ss'}})
-    </div>
-
+<div id="content">
+  <div class="content_box">
+    <h1>{{categoryInformation.title}}
+    </h1>
+    <p>{{categoryInformation.description}}</p>
   </div>
+  <div *ngFor="let article of articles">
+
+    <div class="post_box" [routerLink]="['category', categoryName, 'article', article.articleId]">
+      <div class="float_l">
+        <img *ngIf="!!article.thumbnailUrl" src="{{article.thumbnailUrl}}" alt="{{article.title}} thumbnail image" />
+        <img *ngIf="!article.thumbnailUrl" src="assets/images/noImage.jpg" alt="{{article.title}} thumbnail image" />
+      </div>
+      <div class="texts">
+        <div class="article-header">
+          {{article.title}}
+        </div>
+        <div class="article-description">{{article.description}}</div>
+      </div>
+      <div class="article-footer">
+        Created by (TODO)
+        <span class="timeago" title="{{article.creationTime}}"></span> ({{article.creationTime | date: 'yyyy-MM-dd hh:mm:ss'}})
+      </div>
+
+    </div>
+  </div>
+  <ng-container *ngIf="categoryInformation.numberOfPages > 1">
+    <ng-container *ngFor="let index of createRange(categoryInformation.numberOfPages)">
+      <a class="btn {{currentPage == index ? 'btn-info' : 'btn-primary'}} btn-sm" href="#">{{index}}</a>
+    </ng-container>
+  </ng-container>
 </div>

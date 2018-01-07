@@ -10,7 +10,7 @@ export class ArticleListService {
   constructor(private httpClient:HttpClient) { }
 
   getArticles(categoryName:string, page:number):Observable<ArticleListEntry[]> {
-    let url = environment.coreApiBaseUrl + '/categories/' + categoryName + '?page=' + page;
+    let url = environment.coreApiBaseUrl + '/categories/' + categoryName + "/articles" + '?page=' + page;
     return this.httpClient.get<ArticleListEntry[]>(url);
   }
 }

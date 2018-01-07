@@ -14,7 +14,7 @@ import javax.persistence.OneToOne;
 
 import org.springframework.data.annotation.CreatedDate;
 
-import com.helospark.site.core.service.article.categories.domain.ArticleCategory;
+import com.helospark.site.core.service.article.categories.repository.domain.ArticleCategory;
 
 @Entity(name = "article")
 public class Article {

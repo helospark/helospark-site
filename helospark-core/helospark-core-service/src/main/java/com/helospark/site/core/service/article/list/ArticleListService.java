@@ -11,8 +11,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.helospark.site.core.service.article.categories.domain.ArticleCategory;
+import com.helospark.site.core.service.article.categories.CategoryNotFoundException;
 import com.helospark.site.core.service.article.categories.repository.ArticleCategoryRepository;
+import com.helospark.site.core.service.article.categories.repository.domain.ArticleCategory;
 import com.helospark.site.core.service.article.list.domain.ArticleListEntry;
 import com.helospark.site.core.service.article.list.domain.repository.ArticleRepository;
 
@@ -34,7 +35,7 @@ public class ArticleListService {
     public List<ArticleListEntry> getArticleListEntries(String categoryName, Optional<Integer> page) {
         Optional<ArticleCategory> articleCategory = articleCategoryRepository.findByName(categoryName);
         ArticleCategory category = articleCategory
-                .orElseThrow(() -> new ArticleNotFoundException("Article with name " + categoryName + " not found"));
+                .orElseThrow(() -> new CategoryNotFoundException("Article with name " + categoryName + " not found"));
 
         return ofNullable(articleRepository.findAllByCategoryOrderByCreationTimeDesc(category, createPageable(page)))
                 .map(articles -> articleListConverter.convertArticles(articles))

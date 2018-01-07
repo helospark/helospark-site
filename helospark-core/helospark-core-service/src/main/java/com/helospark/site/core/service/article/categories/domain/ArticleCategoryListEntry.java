@@ -3,32 +3,23 @@ package com.helospark.site.core.service.article.categories.domain;
 import java.util.Objects;
 
 import javax.annotation.Generated;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
-@Entity(name = "article_category")
-public class ArticleCategory {
-    @Id
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+@JsonDeserialize(builder = ArticleCategoryListEntry.Builder.class)
+public class ArticleCategoryListEntry {
     private Integer id;
-
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "icon_class")
     private String iconClass;
 
     @Generated("SparkTools")
-    private ArticleCategory(Builder builder) {
+    private ArticleCategoryListEntry(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.iconClass = builder.iconClass;
-    }
-
-    public ArticleCategory() {
-
     }
 
     public Integer getId() {
@@ -43,18 +34,12 @@ public class ArticleCategory {
         return iconClass;
     }
 
-    //TODO: Generate after https://bugs.eclipse.org/bugs/show_bug.cgi?id=521995 is resolved
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this);
-    }
-
     @Override
     public boolean equals(final Object other) {
-        if (!(other instanceof ArticleCategory)) {
+        if (!(other instanceof ArticleCategoryListEntry)) {
             return false;
         }
-        ArticleCategory castOther = (ArticleCategory) other;
+        ArticleCategoryListEntry castOther = (ArticleCategoryListEntry) other;
         return Objects.equals(id, castOther.id) && Objects.equals(name, castOther.name) && Objects.equals(iconClass, castOther.iconClass);
     }
 
@@ -63,12 +48,19 @@ public class ArticleCategory {
         return Objects.hash(id, name, iconClass);
     }
 
+    //TODO: Generate after https://bugs.eclipse.org/bugs/show_bug.cgi?id=521995 is resolved
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
+    }
+
     @Generated("SparkTools")
     public static Builder builder() {
         return new Builder();
     }
 
     @Generated("SparkTools")
+    @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static final class Builder {
         private Integer id;
         private String name;
@@ -92,8 +84,8 @@ public class ArticleCategory {
             return this;
         }
 
-        public ArticleCategory build() {
-            return new ArticleCategory(this);
+        public ArticleCategoryListEntry build() {
+            return new ArticleCategoryListEntry(this);
         }
     }
 

@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ArticleListComponent } from './article-list/article-list.component';
 
 import { ArticleListService } from './article-list/article-list-service/article-list.service';
+import { CategoryInformationService } from './article-list/category-information-service/category-information.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -32,7 +33,11 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     HttpClientModule
   ],
-  providers: [MenuRequestService, ArticleListService],
+  providers: [
+    MenuRequestService,
+    ArticleListService,
+    CategoryInformationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

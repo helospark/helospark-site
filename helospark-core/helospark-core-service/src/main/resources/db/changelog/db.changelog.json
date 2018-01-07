@@ -85,6 +85,59 @@
           }
         ]
       }
+    },
+    {
+      "changeSet": {
+        "id": "5",
+        "author": "helospark",
+        "changes": [
+          {
+            "sql": {
+              "comment": "Add description field to category",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "ALTER TABLE article_category ADD COLUMN description VARCHAR(2000)",
+              "stripComments": true
+            }
+          },
+          {
+            "sql": {
+              "comment": "Add title field to category",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "ALTER TABLE article_category ADD COLUMN title VARCHAR(255)",
+              "stripComments": true
+            }
+          },
+          {
+            "sql": {
+              "comment": "Update description",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "UPDATE article_category SET description='In this category you can read about computer realted stuff, most notably programming, CGI, Linux. But many more subjects will come.', title='Articles about Computers' WHERE name='computer'",
+              "stripComments": true
+            }
+          },
+          {
+            "sql": {
+              "comment": "Update description",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "UPDATE article_category SET description='Here you can read about electronics. I''m especially interested in high voltage and and green energy.', title='Articles of Electronics' WHERE name='electronics'",
+              "stripComments": true
+            }
+          },
+          {
+            "sql": {
+              "comment": "Update description",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "UPDATE article_category SET description='This is the place where I put things I don''t know where to put.', title='Kinda a Technical blog' WHERE name='blog'",
+              "stripComments": true
+            }
+          }
+        ]
+      }
     }
   ]
 }

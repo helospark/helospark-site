@@ -49,7 +49,7 @@ public class ArticleListIT {
                         .withDescription("description").build());
 
         // WHEN
-        ResponseEntity<List<ArticleListEntry>> result = restTemplate.exchange("/categories/computer", HttpMethod.GET, null, RESPONSE_TYPE);
+        ResponseEntity<List<ArticleListEntry>> result = restTemplate.exchange("/categories/computer/articles", HttpMethod.GET, null, RESPONSE_TYPE);
 
         // THEN
         assertAll(() -> assertThat(result.getStatusCode(), is(HttpStatus.OK)),
@@ -61,7 +61,8 @@ public class ArticleListIT {
         // GIVEN
 
         // WHEN
-        ResponseEntity<List<ArticleListEntry>> result = restTemplate.exchange("/categories/notExisting", HttpMethod.GET, null, RESPONSE_TYPE);
+        ResponseEntity<List<ArticleListEntry>> result = restTemplate.exchange("/categories/notExisting/articles", HttpMethod.GET, null,
+                RESPONSE_TYPE);
 
         // THEN
         assertThat(result.getStatusCode(), is(HttpStatus.NOT_FOUND));
@@ -72,7 +73,8 @@ public class ArticleListIT {
         // GIVEN
 
         // WHEN
-        ResponseEntity<List<ArticleListEntry>> result = restTemplate.exchange("/categories/blog?page=0", HttpMethod.GET, null, RESPONSE_TYPE);
+        ResponseEntity<List<ArticleListEntry>> result = restTemplate.exchange("/categories/blog/articles?page=0", HttpMethod.GET, null,
+                RESPONSE_TYPE);
 
         // THEN
         assertThat(result.getStatusCode(), is(HttpStatus.BAD_REQUEST));
@@ -83,7 +85,8 @@ public class ArticleListIT {
         // GIVEN
 
         // WHEN
-        ResponseEntity<List<ArticleListEntry>> result = restTemplate.exchange("/categories/electronics", HttpMethod.GET, null, RESPONSE_TYPE);
+        ResponseEntity<List<ArticleListEntry>> result = restTemplate.exchange("/categories/electronics/articles", HttpMethod.GET, null,
+                RESPONSE_TYPE);
 
         // THEN
         assertAll(() -> assertThat(result.getStatusCode(), is(HttpStatus.OK)),
@@ -95,7 +98,7 @@ public class ArticleListIT {
         // GIVEN
 
         // WHEN
-        ResponseEntity<List<ArticleListEntry>> result = restTemplate.exchange("/categories/blog", HttpMethod.GET, null, RESPONSE_TYPE);
+        ResponseEntity<List<ArticleListEntry>> result = restTemplate.exchange("/categories/blog/articles", HttpMethod.GET, null, RESPONSE_TYPE);
 
         // THEN
         assertAll(() -> assertThat(result.getStatusCode(), is(HttpStatus.OK)),
@@ -107,7 +110,8 @@ public class ArticleListIT {
         // GIVEN
 
         // WHEN
-        ResponseEntity<List<ArticleListEntry>> result = restTemplate.exchange("/categories/blog?page=1", HttpMethod.GET, null, RESPONSE_TYPE);
+        ResponseEntity<List<ArticleListEntry>> result = restTemplate.exchange("/categories/blog/articles?page=1", HttpMethod.GET, null,
+                RESPONSE_TYPE);
 
         // THEN
         assertAll(() -> assertThat(result.getStatusCode(), is(HttpStatus.OK)),
@@ -119,7 +123,8 @@ public class ArticleListIT {
         // GIVEN
 
         // WHEN
-        ResponseEntity<List<ArticleListEntry>> result = restTemplate.exchange("/categories/blog?page=2", HttpMethod.GET, null, RESPONSE_TYPE);
+        ResponseEntity<List<ArticleListEntry>> result = restTemplate.exchange("/categories/blog/articles?page=2", HttpMethod.GET, null,
+                RESPONSE_TYPE);
 
         // THEN
         assertAll(() -> assertThat(result.getStatusCode(), is(HttpStatus.OK)),

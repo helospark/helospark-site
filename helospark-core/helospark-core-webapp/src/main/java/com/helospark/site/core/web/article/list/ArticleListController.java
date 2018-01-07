@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.helospark.site.core.service.article.categories.CategoryNotFoundException;
 import com.helospark.site.core.service.article.list.ArticleListService;
-import com.helospark.site.core.service.article.list.ArticleNotFoundException;
 import com.helospark.site.core.service.article.list.domain.ArticleListEntry;
 
 @RestController
@@ -30,7 +30,7 @@ public class ArticleListController {
         this.articleListService = articleListService;
     }
 
-    @RequestMapping(path = "/categories/{categoryName}", produces = "application/json")
+    @RequestMapping(path = "/categories/{categoryName}/articles", produces = "application/json")
     public List<ArticleListEntry> getCategoryListEntries(
             @NotNull @NotEmpty @PathVariable("categoryName") String categoryName,
             @Nullable @Min(1) @RequestParam("page") Integer pageNumber) {
@@ -38,7 +38,7 @@ public class ArticleListController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<Void> handleArticleNotFoundException(ArticleNotFoundException exception) {
+    public ResponseEntity<Void> handleArticleNotFoundException(CategoryNotFoundException exception) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .build();
