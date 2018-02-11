@@ -138,6 +138,23 @@
           }
         ]
       }
+    },
+    {
+      "changeSet": {
+        "id": "6",
+        "author": "helospark",
+        "changes": [
+          {
+            "sql": {
+              "comment": "Create user table",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "CREATE TABLE application_user (id int AUTO_INCREMENT NOT NULL, username varchar(100) NOT NULL, password varchar(100), PRIMARY KEY (id))",
+              "stripComments": true
+            }
+          }
+        ]
+      }
     }
   ]
 }

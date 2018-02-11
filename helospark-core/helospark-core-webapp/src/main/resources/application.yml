@@ -18,3 +18,8 @@ spring:
 article:
   list:
     pagesize: 10
+
+security:
+  jwt:
+    secretKey: development_secret_key
+    expirationTime: 864000000
