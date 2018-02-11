@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import com.helospark.site.core.service.article.list.domain.Article;
+import com.helospark.site.core.service.article.domain.Article;
 import com.helospark.site.core.service.article.list.domain.ArticleListEntry;
 
 @Component

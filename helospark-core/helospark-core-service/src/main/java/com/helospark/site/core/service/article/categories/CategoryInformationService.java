@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.helospark.site.core.service.article.categories.domain.CategoryInformation;
 import com.helospark.site.core.service.article.categories.repository.ArticleCategoryRepository;
 import com.helospark.site.core.service.article.categories.repository.domain.ArticleCategory;
-import com.helospark.site.core.service.article.list.domain.repository.ArticleRepository;
+import com.helospark.site.core.service.article.domain.repository.ArticleRepository;
 
 @Service
 public class CategoryInformationService {

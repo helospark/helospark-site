@@ -1,4 +1,4 @@
-package com.helospark.site.core.it.categories;
+package com.helospark.site.core.it.category;
 
 import static java.util.Collections.singletonList;
 import static org.hamcrest.CoreMatchers.is;

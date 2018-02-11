@@ -13,10 +13,13 @@ import { ArticleListComponent } from './article-list/article-list.component';
 
 import { ArticleListService } from './article-list/article-list-service/article-list.service';
 import { CategoryInformationService } from './article-list/category-information-service/category-information.service';
+import { ArticleDetailsComponent } from './article-details/article-details.component';
+import { ArticleDetailService } from './article-details/article-details-service/article-detail.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'category/:categoryName', component: ArticleListComponent },
+  { path: 'category/:categoryName/article/:articleName', component: ArticleDetailsComponent }
  ];
 
 @NgModule({
@@ -26,7 +29,8 @@ const routes: Routes = [
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    ArticleListComponent
+    ArticleListComponent,
+    ArticleDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +40,8 @@ const routes: Routes = [
   providers: [
     MenuRequestService,
     ArticleListService,
-    CategoryInformationService
+    CategoryInformationService,
+    ArticleDetailService
   ],
   bootstrap: [AppComponent]
 })

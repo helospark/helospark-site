@@ -1,0 +1,47 @@
+#description {
+	font-weight: 700;
+	font-size: 12pt;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+#articleContent {
+	
+}
+
+.comment-block {
+	width: 50%;
+	border: 1px black solid;
+	border-radius: 5px;
+	margin: 10px;
+	padding: 6px;
+	min-width: 400px;
+}
+
+#article-section {
+	padding-bottom: 20px;
+}
+
+#comment-section {
+    margin-top: 20px;	
+}
+
+#commentText {
+	width: 400px;
+	height: 70px;
+	margin: 5px 0;
+}
+
+.vote-active {
+	opacity: 1.0;
+}
+
+.vote-passive {
+	opacity: 0.6;
+}
+
+@media screen and (max-width: 625px) {
+    #description {
+        font-size: 14pt;
+    }
+}

@@ -1,4 +1,4 @@
-package com.helospark.site.core.service.article.list.domain;
+package com.helospark.site.core.service.article.domain;
 
 import java.time.ZonedDateTime;
 

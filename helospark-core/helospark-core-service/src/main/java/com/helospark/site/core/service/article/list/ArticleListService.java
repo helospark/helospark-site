@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import com.helospark.site.core.service.article.categories.CategoryNotFoundException;
 import com.helospark.site.core.service.article.categories.repository.ArticleCategoryRepository;
 import com.helospark.site.core.service.article.categories.repository.domain.ArticleCategory;
+import com.helospark.site.core.service.article.domain.repository.ArticleRepository;
 import com.helospark.site.core.service.article.list.domain.ArticleListEntry;
-import com.helospark.site.core.service.article.list.domain.repository.ArticleRepository;
 
 @Service
 public class ArticleListService {

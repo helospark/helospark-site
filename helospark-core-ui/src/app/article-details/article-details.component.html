@@ -1,0 +1,8 @@
+<div id="article-section" class="bottom-separated">
+  <h1>{{articleDetail.title}}</h1>
+  <div class="bottom-separated" id="description">{{articleDetail.description}}</div>
+  <div id="articleContent" innerHtml="{{articleDetail.text}}"></div>
+</div>
+<div id="article-details">
+  Article was created by <b>TBD</b><span class="timeago" title="{{articleDetail.creationTime | date:'yyyy-MM-dd hh:mm:ss'}}"></span> ({{articleDetail.creationTime | date:'yyyy-MM-dd hh:mm:ss'}})
+</div>

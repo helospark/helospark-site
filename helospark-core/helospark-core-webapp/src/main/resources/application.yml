@@ -2,6 +2,9 @@ server:
   servlet:
     context-path: "/api"
 spring:
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
   liquibase:
     change-log: classpath:/db/changelog/db.changelog.json
   datasource:

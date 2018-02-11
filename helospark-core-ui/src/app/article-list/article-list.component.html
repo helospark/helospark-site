@@ -6,7 +6,7 @@
   </div>
   <div *ngFor="let article of articles">
 
-    <div class="post_box" [routerLink]="['category', categoryName, 'article', article.articleId]">
+    <div class="post_box" [routerLink]="['article', article.articleId]">
       <div class="float_l">
         <img *ngIf="!!article.thumbnailUrl" src="{{article.thumbnailUrl}}" alt="{{article.title}} thumbnail image" />
         <img *ngIf="!article.thumbnailUrl" src="assets/images/noImage.jpg" alt="{{article.title}} thumbnail image" />
