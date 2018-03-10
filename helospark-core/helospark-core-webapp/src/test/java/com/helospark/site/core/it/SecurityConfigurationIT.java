@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.helospark.site.core.Application;
 import com.helospark.site.core.it.SecurityConfigurationIT.DummySecureController;
-import com.helospark.site.core.web.user.domain.LoginResponse;
+import com.helospark.site.core.web.security.domain.AuthenticationResult;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = { Application.class, DummySecureController.class })
@@ -65,6 +65,7 @@ public class SecurityConfigurationIT {
         ResponseEntity<String> result = restTemplate.exchange("/secret", HttpMethod.GET, newEntity, String.class);
 
         // THEN
+        assertThat(result.getStatusCodeValue(), is(200));
         assertThat(result.getBody(), is("Secret"));
     }
 
@@ -77,17 +78,44 @@ public class SecurityConfigurationIT {
         ResponseEntity<String> result = restTemplate.exchange("/secret_with_user_role", HttpMethod.GET, newEntity, String.class);
 
         // THEN
+        assertThat(result.getStatusCodeValue(), is(200));
         assertThat(result.getBody(), is("Secret with role"));
     }
 
+    @Test
+    public void testRegisterAndRefreshToken(@Autowired TestRestTemplate restTemplate) {
+        // GIVEN
+        ResponseEntity<AuthenticationResult> loginResult = registerAndGetTokens(restTemplate, "user5");
+        HttpEntity<String> newEntity = createRefreshTokenEntity(loginResult);
+
+        // WHEN
+        ResponseEntity<AuthenticationResult> result = restTemplate.exchange("/users/login/refresh", HttpMethod.POST, newEntity,
+                AuthenticationResult.class);
+
+        // THEN
+        assertThat(result.getStatusCodeValue(), is(200));
+    }
+
+    private HttpEntity<String> createRefreshTokenEntity(ResponseEntity<AuthenticationResult> loginResult) {
+        String body = "{ \"refreshToken\": \"" + loginResult.getBody().getRefreshToken().getToken() + "\" }";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new HttpEntity<>(body, headers);
+    }
+
     private HttpEntity<Void> registerAndLoginAndGetTokenHeader(TestRestTemplate restTemplate, String userName) {
-        HttpEntity<String> entity = getDataUserBody(userName);
-        restTemplate.exchange("/users/register", HttpMethod.POST, entity, Void.class);
-        ResponseEntity<LoginResponse> loginResult = restTemplate.exchange("/users/login", HttpMethod.POST, entity, LoginResponse.class);
+        ResponseEntity<AuthenticationResult> loginResult = registerAndGetTokens(restTemplate, userName);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + loginResult.getBody().getToken());
+        headers.add("Authorization", "Bearer " + loginResult.getBody().getAuthenticationToken().getToken());
         return new HttpEntity<>(headers);
+    }
+
+    private ResponseEntity<AuthenticationResult> registerAndGetTokens(TestRestTemplate restTemplate, String userName) {
+        HttpEntity<String> entity = getDataUserBody(userName);
+        restTemplate.exchange("/users/register", HttpMethod.POST, entity, Void.class);
+        ResponseEntity<AuthenticationResult> loginResult = restTemplate.exchange("/users/login", HttpMethod.POST, entity, AuthenticationResult.class);
+        return loginResult;
     }
 
     @Test

@@ -22,4 +22,7 @@ article:
 security:
   jwt:
     secretKey: development_secret_key
-    expirationTime: 864000000
+    authentication:
+      expirationTime: 864000000
+    refresh:
+      expirationTime: 31536000000

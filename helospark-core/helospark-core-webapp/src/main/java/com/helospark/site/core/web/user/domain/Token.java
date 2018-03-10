@@ -3,15 +3,14 @@ package com.helospark.site.core.web.user.domain;
 import javax.annotation.Generated;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-@JsonDeserialize(builder = LoginResponse.Builder.class)
-public class LoginResponse {
+@JsonDeserialize(builder = Token.Builder.class)
+public class Token {
     private String token;
     private long expirationTimeInSeconds;
 
     @Generated("SparkTools")
-    private LoginResponse(Builder builder) {
+    private Token(Builder builder) {
         this.token = builder.token;
         this.expirationTimeInSeconds = builder.expirationTimeInSeconds;
     }
@@ -30,12 +29,21 @@ public class LoginResponse {
     }
 
     @Generated("SparkTools")
-    @JsonPOJOBuilder
+    public static Builder builderFrom(Token token) {
+        return new Builder(token);
+    }
+
+    @Generated("SparkTools")
     public static final class Builder {
         private String token;
         private long expirationTimeInSeconds;
 
         private Builder() {
+        }
+
+        private Builder(Token token) {
+            this.token = token.token;
+            this.expirationTimeInSeconds = token.expirationTimeInSeconds;
         }
 
         public Builder withToken(String token) {
@@ -48,8 +56,8 @@ public class LoginResponse {
             return this;
         }
 
-        public LoginResponse build() {
-            return new LoginResponse(this);
+        public Token build() {
+            return new Token(this);
         }
     }
 

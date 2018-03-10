@@ -1,4 +1,4 @@
-package com.helospark.site.core.web.user;
+package com.helospark.site.core.web.user.registration;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
