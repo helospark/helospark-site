@@ -7,20 +7,26 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @JsonDeserialize(builder = Token.Builder.class)
 public class Token {
     private String token;
-    private long expirationTimeInSeconds;
+    private long expirationTime;
+    private long expiresAt;
 
     @Generated("SparkTools")
     private Token(Builder builder) {
         this.token = builder.token;
-        this.expirationTimeInSeconds = builder.expirationTimeInSeconds;
+        this.expirationTime = builder.expirationTime;
+        this.expiresAt = builder.expiresAt;
     }
 
     public String getToken() {
         return token;
     }
 
-    public long getExpirationTimeInSeconds() {
-        return expirationTimeInSeconds;
+    public long getExpirationTime() {
+        return expirationTime;
+    }
+
+    public long getExpiresAt() {
+        return expiresAt;
     }
 
     @Generated("SparkTools")
@@ -36,14 +42,16 @@ public class Token {
     @Generated("SparkTools")
     public static final class Builder {
         private String token;
-        private long expirationTimeInSeconds;
+        private long expirationTime;
+        private long expiresAt;
 
         private Builder() {
         }
 
         private Builder(Token token) {
             this.token = token.token;
-            this.expirationTimeInSeconds = token.expirationTimeInSeconds;
+            this.expirationTime = token.expirationTime;
+            this.expiresAt = token.expiresAt;
         }
 
         public Builder withToken(String token) {
@@ -51,8 +59,13 @@ public class Token {
             return this;
         }
 
-        public Builder withExpirationTimeInSeconds(long expirationTimeInSeconds) {
-            this.expirationTimeInSeconds = expirationTimeInSeconds;
+        public Builder withExpirationTime(long expirationTime) {
+            this.expirationTime = expirationTime;
+            return this;
+        }
+
+        public Builder withExpiresAt(long expiresAt) {
+            this.expiresAt = expiresAt;
             return this;
         }
 

@@ -35,29 +35,32 @@ public class AuthenticationService {
     }
 
     private Token buildAuthenticationToken(User user) {
+        long expiresAt = System.currentTimeMillis() + authenticationTokenExpirationTime;
         String token = Jwts.builder()
                 .setSubject(user.getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + authenticationTokenExpirationTime))
+                .setExpiration(new Date(expiresAt))
                 .claim(AUTHORITY, getAuthoritiesAsString(user))
                 .signWith(SignatureAlgorithm.HS512, secret.getBytes())
                 .compact();
-        return buildToken(token, authenticationTokenExpirationTime);
+        return buildToken(token, expiresAt, authenticationTokenExpirationTime);
     }
 
     private Token buildRefreshToken(User user) {
+        long expiresAt = System.currentTimeMillis() + refreshTokenExpirationTime;
         String token = Jwts.builder()
                 .setSubject(user.getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + authenticationTokenExpirationTime))
+                .setExpiration(new Date(expiresAt))
                 .claim(PASSWORD_HASH, user.getPassword())
                 .signWith(SignatureAlgorithm.HS512, secret.getBytes())
                 .compact();
-        return buildToken(token, refreshTokenExpirationTime);
+        return buildToken(token, expiresAt, refreshTokenExpirationTime);
     }
 
-    private Token buildToken(String token, Long authenticationTokenExpirationTime2) {
+    private Token buildToken(String token, Long expiresAt, Long expirationTime) {
         return Token.builder()
                 .withToken(token)
-                .withExpirationTimeInSeconds(authenticationTokenExpirationTime2)
+                .withExpiresAt(expiresAt)
+                .withExpirationTime(expirationTime)
                 .build();
     }
 
