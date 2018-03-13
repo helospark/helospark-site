@@ -1,0 +1,19 @@
+<bs-modal #modal>
+    <bs-modal-header [showDismiss]="true">
+        <h4 class="modal-title">I'm a modal!</h4>
+    </bs-modal-header>
+    <bs-modal-body>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" required name="username" [(ngModel)]="loginData.username" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" required name="password" [(ngModel)]="loginData.password" />
+        </div>
+    </bs-modal-body>
+    <bs-modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onCancel()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="onSubmit()">Ok</button>
+    </bs-modal-footer>
+</bs-modal>
