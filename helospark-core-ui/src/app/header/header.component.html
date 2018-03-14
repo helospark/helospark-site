@@ -15,24 +15,10 @@
   -->
     <div id="header_right">
       <div id="newsletter_box">
-      <!--  <c:if test="${currentPage != 'login'}">
-          <sec:authorize access="isAnonymous()">-->
-
-            <form action="/login" method="post">
-              <input type="text" id="username" name="username" class="text-input" placeholder="username" />
-              <br />
-              <input type="password" id="password" name="password" class="text-input" placeholder="password" autocomplete="off" />
-              <input type="checkbox" id="remember-me" name="remember-me" checked="checked" hidden="true" />
-              <br />
-              <div id="submit-container">
-                <button type="submit" class="btn btn-primary" type="submit" name="submit" id="submit">Log in</button>
-                <a href="/register" class="btn btn-primary pull-right">Register</a>
-              </div>
-            </form>
-       <!--   </sec:authorize>
-          <sec:authorize access="not isAnonymous()">
-            Logged in as <sec:authentication property="principal.username" />
-                    <div>
+            <app-login-form *ngIf="authenticationStore.isLoggedOut()"></app-login-form>
+            <div *ngIf="authenticationStore.isLoggedIn()">
+                    Logged in
+<!--                    <div>
                       <c:url value="/user/profile/edit" var="profileUrl" />
                       <a href="${profileUrl}">Edit profile</a>
                     </div>
@@ -43,10 +29,8 @@
                     <div>
                       <c:url var="logoutUrl" value="/logout" />
                       <a href="${logoutUrl}">Log out</a>
-                    </div>
-          </sec:authorize>
-        </c:if>
-      -->
+                    </div> -->
+            </div>
       </div>
     </div>
     <div class="cleaner"></div>

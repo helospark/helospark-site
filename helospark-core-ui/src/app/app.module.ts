@@ -23,6 +23,8 @@ import { ArticleListService } from './article-list/article-list-service/article-
 import { CategoryInformationService } from './article-list/category-information-service/category-information.service';
 import { ArticleDetailsComponent } from './article-details/article-details.component';
 import { ArticleDetailService } from './article-details/article-details-service/article-detail.service';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { LoginService } from './common/login/login.service';
 
 
 const routes: Routes = [
@@ -40,7 +42,8 @@ const routes: Routes = [
     HomeComponent,
     ArticleListComponent,
     ArticleDetailsComponent,
-    LoginDialogComponent
+    LoginDialogComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +59,7 @@ const routes: Routes = [
     ArticleDetailService,
     LoginDialogService,
     AuthenticationStoreService,
+    LoginService,
     RestCommunicatorService,
     {
       provide: HTTP_INTERCEPTORS,

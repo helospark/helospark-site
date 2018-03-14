@@ -1,3 +1,4 @@
+import { LoginService } from './../login/login.service';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { LoginDialogService } from './login-dialog-service';
@@ -19,7 +20,7 @@ export class LoginDialogComponent implements OnInit, AfterViewInit {
 
   private resolve;
 
-  constructor(private loginDialogService:LoginDialogService, private http:HttpClient) { }
+  constructor(private loginDialogService:LoginDialogService, private loginService:LoginService) { }
 
   ngOnInit() {
     console.log("Login dialog component const");
@@ -37,7 +38,7 @@ export class LoginDialogComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     //console.log(this.loginData.userName + " " + this.loginData.password;
-    this.http.post<AuthenticationTokens>(environment.coreApiBaseUrl + "/users/login", this.loginData)
+    this.loginService.doLogin(this.loginData)
           .subscribe(result => {
             this.resolve(result);
             this.modal.close();

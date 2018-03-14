@@ -1,0 +1,11 @@
+<form action="/login" method="post">
+  <input type="text"  [(ngModel)]="loginData.username" name="username" class="text-input" placeholder="username" />
+  <br />
+  <input type="password" [(ngModel)]="loginData.password" name="password" class="text-input" placeholder="password" autocomplete="off" />
+  <input type="checkbox" name="remember-me" checked="checked" hidden="true" />
+  <br />
+  <div id="submit-container">
+    <button type="button" (click)="onSubmit()" class="btn btn-primary" name="submit" id="submit">Log in</button>
+    <a routerLink="/register" class="btn btn-primary pull-right">Register</a>
+  </div>
+</form>

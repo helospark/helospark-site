@@ -3,15 +3,13 @@ import { AuthenticationTokens } from './authentication-tokens';
 import { Injectable, OnInit } from '@angular/core';
 
 @Injectable()
-export class AuthenticationStoreService implements OnInit {
+export class AuthenticationStoreService {
   private thresholdTime:number = 1000;
 
   private tokenKey:string = "Authentication-tokens";
   private authenticationTokens:AuthenticationTokens;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor() {
     var result = localStorage.getItem(this.tokenKey);
     if (result) {
       this.authenticationTokens = JSON.parse(result);
@@ -27,7 +25,8 @@ export class AuthenticationStoreService implements OnInit {
   }
 
   setTokens(tokens:AuthenticationTokens) {
-    this.authenticationTokens = tokens;
+    console.log("Tokens changed");
+    this.updateToken(tokens);
   }
 
   getRefreshToken():string {
