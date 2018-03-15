@@ -1,0 +1,58 @@
+<div id="comment-section">
+  Ask questions or share your opinion.
+  <div class="commentForm">
+    <div *ngIf="authStore.isLoggedIn()">
+      <form>
+        <div>
+          <textarea name="comment-text" [(ngModel)]="comment.text"></textarea>
+        </div>
+        <!--<div>Prove that you are a human (if captcha is not loaded, wait a bit):</div>
+        <div class="col-sm-5">
+          <div class="g-recaptcha" data-theme="dark" data-sitekey="6LfdQhITAAAAAFPEupAVPlttSGDufEyuCAh-66vP"></div>
+          <form:errors cssClass="form-error" path="captcha" />
+        </div>-->
+        <div class="float_cleaner">
+          <button (click)="onCommentSubmit()" class="btn btn-primary btn-sm">Submit comment</button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="authStore.isLoggedOut()">
+      You need to login to comment.
+    </div>
+  </div>
+  <div id="comments">
+    <div *ngFor="let comment of comments" class="comment-block">
+      <!--style="margin-left: {{comment.level * 30}}" -->
+      <div class="comment-head bottom-separated">
+        <span>
+          <a routerLink="['user', 'details', comment.commenter.id]" rel="nofollow">{{comment.commenter.name}}</a>
+        </span>
+        <span class="comment-time pull-right">
+          <span class="timeago" title="{{comment.commentTime}}"></span> ({{comment.commentTime}})</span>
+      </div>
+      <div class="comment-body bottom-separated">
+        <div>
+          {{comment.text}}
+        </div>
+      </div>
+      <div class="comment-footer">
+        <div *ngIf="authStore.isLoggedIn()">
+          <!--<c:url var="answerUrl" value="${comment.answerUrl}" />
+            <span class="link nounderline answerLink" data-comment-id="${comment.id}">Answer</span>-->
+        </div>
+        <div *ngIf="authStore.isLoggedOut()">
+          <span class="link" data-toggle="popover" data-trigger="click" data-content="Log in to answer!">Answer</span>
+        </div>
+        <span class="vote-number">{{comment.votes}}</span>
+
+        <span (click)="onVote(comment.id, 1)" class="link nounderline vote-up">
+          <!--<span class="fa fa-thumbs-up fa-lg {{comment.currentUserVoteDirection == 1 ? 'vote-active' : 'vote-passive'}}"></span>-->
+        </span>
+
+        <span (click)="onVote(comment.id, -1)" class="link nounderline vote-down">
+          <!--<span class="fa fa-thumbs-down fa-lg {{comment.currentUserVoteDirection == -1 ? 'vote-active' : 'vote-passive'}}"></span>-->
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 <div id="header">
     <div id="site_title" class="unselectable">
-      <a href="#" class="unselectable">Technology Blog</a>
+      <a routerLink="/" class="unselectable">Technology Blog</a>
     </div>
 <!--    <c:if test="${heloPageModel.numberOfUnreadMessages != 0}">
       <c:url value="${heloPageModel.listPrivateMessagesUrl}" var="listPrivateMessagesUrl"/>
@@ -17,7 +17,10 @@
       <div id="newsletter_box">
             <app-login-form *ngIf="authenticationStore.isLoggedOut()"></app-login-form>
             <div *ngIf="authenticationStore.isLoggedIn()">
-                    Logged in
+                    <div>Logged in as ...</div>
+                    <div>
+                      <a (click)="onLogout()">Log out</a>
+                    </div>
 <!--                    <div>
                       <c:url value="/user/profile/edit" var="profileUrl" />
                       <a href="${profileUrl}">Edit profile</a>

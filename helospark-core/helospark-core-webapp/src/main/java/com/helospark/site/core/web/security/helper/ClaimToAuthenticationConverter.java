@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.helospark.site.core.web.security.JwtClaimConstants;
+import com.helospark.site.core.web.security.TokenUser;
 
 import io.jsonwebtoken.Claims;
 
@@ -20,7 +21,13 @@ public class ClaimToAuthenticationConverter {
     public UsernamePasswordAuthenticationToken convertToAuthentication(Claims body) {
         String userName = body.getSubject();
         List<? extends GrantedAuthority> authorities = extractAuthorities(body);
-        return new UsernamePasswordAuthenticationToken(userName, null, authorities);
+        return new UsernamePasswordAuthenticationToken(createTokenUser(userName), null, authorities);
+    }
+
+    private TokenUser createTokenUser(String userName) {
+        return TokenUser.builder()
+                .withUserName(userName)
+                .build();
     }
 
     private List<? extends GrantedAuthority> extractAuthorities(Claims body) {

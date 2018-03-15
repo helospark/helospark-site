@@ -155,6 +155,23 @@
           }
         ]
       }
+    },
+    {
+      "changeSet": {
+        "id": "7",
+        "author": "helospark",
+        "changes": [
+          {
+            "sql": {
+              "comment": "Create comment table",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "CREATE TABLE article_comment (id int AUTO_INCREMENT NOT NULL, text varchar(1000) NOT NULL, comment_time DATETIME NOT NULL, article_id int NOT NULL, commenter_id int NOT NULL, PRIMARY KEY (id), FOREIGN KEY (article_id) REFERENCES article(id), FOREIGN KEY (commenter_id) REFERENCES application_user(id))",
+              "stripComments": true
+            }
+          }
+        ]
+      }
     }
   ]
 }

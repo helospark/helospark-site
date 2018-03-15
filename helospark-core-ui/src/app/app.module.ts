@@ -1,3 +1,4 @@
+import { ArticleCommentService } from './article-comment/service/article-comment.service';
 import { LoginDialogComponent } from './common/login-dialog/login-dialog.component';
 import { AuthenticationStoreService } from './common/authentication-store/authentication-store.service';
 import { RestCommunicatorService } from './common/rest/rest-communicator.service';
@@ -25,6 +26,7 @@ import { ArticleDetailsComponent } from './article-details/article-details.compo
 import { ArticleDetailService } from './article-details/article-details-service/article-detail.service';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { LoginService } from './common/login/login.service';
+import { ArticleCommentComponent } from './article-comment/article-comment.component';
 
 
 const routes: Routes = [
@@ -43,7 +45,8 @@ const routes: Routes = [
     ArticleListComponent,
     ArticleDetailsComponent,
     LoginDialogComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    ArticleCommentComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +63,7 @@ const routes: Routes = [
     LoginDialogService,
     AuthenticationStoreService,
     LoginService,
+    ArticleCommentService,
     RestCommunicatorService,
     {
       provide: HTTP_INTERCEPTORS,

@@ -14,9 +14,22 @@ export class RestCommunicatorService {
 
   constructor(private http:HttpClient, private loginDialog:LoginDialogService, private authenticationStore:AuthenticationStoreService) { }
 
+
   httpGet(url:string):Observable<any> {
-    var restCall:Observable<any> = this.doRestCall(environment.coreApiBaseUrl + url);
-    
+    var restCall:Observable<any> = this.http.get(this.buildUrl(url));
+    return this.createResult(restCall);
+  }
+
+  httpPost(url:string, data:any) {
+    var restCall:Observable<any> = this.http.post(this.buildUrl(url), data);
+    return this.createResult(restCall);
+  }
+
+  private buildUrl(url:string):string {
+    return environment.coreApiBaseUrl + url;
+  }
+
+  private createResult(restCall:Observable<any>):Observable<any> {
     if (this.authenticationStore.isTokenRefreshRequired()) {
       return this.refreshToken()
         .mergeMap(ignored => restCall);
@@ -33,24 +46,19 @@ export class RestCommunicatorService {
     }
   }
 
-  doRestCall(url:string):Observable<Object> {
-    return this.http.get(url);
-  }
-
-  refreshToken():Observable<any> {
+  private refreshToken():Observable<any> {
     var refreshToken = new RefreshToken(this.authenticationStore.getRefreshToken());
     return this.http.post<AuthenticationTokens>(environment.coreApiBaseUrl + "/users/login/refresh", refreshToken)
               .map(response => this.processResponse(response));
   }
 
-
-  relogin():Observable<any> {
+  private relogin():Observable<any> {
     return this.loginDialog
       .show()
       .map(result => this.processResponse(result));
   }
 
-  processResponse(tokens:AuthenticationTokens) {
+  private processResponse(tokens:AuthenticationTokens) {
     this.authenticationStore.setTokens(tokens);
   }
 
