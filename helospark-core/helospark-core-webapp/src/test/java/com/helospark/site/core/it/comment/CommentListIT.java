@@ -4,6 +4,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
@@ -25,8 +26,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.helospark.site.core.web.article.comment.domain.ArticleCommentDomain;
-import com.helospark.site.core.web.article.comment.domain.ArticleCommentUser;
+import com.helospark.site.core.service.article.comment.domain.ArticleCommentDomain;
+import com.helospark.site.core.service.article.comment.domain.ArticleCommentUser;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -40,6 +41,17 @@ public class CommentListIT {
     };
 
     @Test
+    public void testGetCommentsShouldResultIn200(@Autowired TestRestTemplate restTemplate) {
+        // GIVEN
+
+        // WHEN
+        ResponseEntity<String> result = restTemplate.exchange("/comment?articleId=1&page=0", HttpMethod.GET, null, String.class);
+
+        // THEN
+        assertEquals(200, result.getStatusCodeValue(), "Status code is not OK, " + result);
+    }
+
+    @Test
     public void testGetComments(@Autowired TestRestTemplate restTemplate) {
         // GIVEN
         List<ArticleCommentDomain> expected = createExpected();
@@ -50,6 +62,18 @@ public class CommentListIT {
         // THEN
         assertThat(result.getStatusCodeValue(), is(200));
         assertThat(result.getBody(), is(expected));
+    }
+
+    @Test
+    public void testGetCommentsShouldReturnedSummedVotes(@Autowired TestRestTemplate restTemplate) {
+        // GIVEN
+
+        // WHEN
+        ResponseEntity<List<ArticleCommentDomain>> result = restTemplate.exchange("/comment?articleId=3&page=0", HttpMethod.GET, null, RESPONSE_TYPE);
+
+        // THEN
+        assertThat(result.getStatusCodeValue(), is(200));
+        assertThat(result.getBody().get(0).getVotes(), is(1));
     }
 
     @Test

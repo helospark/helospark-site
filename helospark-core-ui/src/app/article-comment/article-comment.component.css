@@ -1,0 +1,22 @@
+.comment-block {
+	width: 50%;
+	border: 1px black solid;
+	border-radius: 5px;
+	margin: 10px;
+	padding: 6px;
+	min-width: 400px;
+}
+
+#commentText {
+	width: 400px;
+	height: 70px;
+	margin: 5px 0;
+}
+
+.vote-active {
+	opacity: 1.0;
+}
+
+.vote-passive {
+	opacity: 0.6;
+}

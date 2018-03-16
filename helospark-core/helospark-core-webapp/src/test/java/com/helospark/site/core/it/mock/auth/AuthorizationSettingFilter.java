@@ -1,4 +1,4 @@
-package com.helospark.site.core.it.security.util.auth;
+package com.helospark.site.core.it.mock.auth;
 
 import java.io.IOException;
 import java.util.Collections;

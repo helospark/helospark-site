@@ -27,12 +27,12 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.helospark.site.core.Application;
-import com.helospark.site.core.it.security.util.auth.AuthorizationFilterConfig;
-import com.helospark.site.core.it.security.util.auth.CustomWithMockUser;
+import com.helospark.site.core.it.mock.auth.AuthorizationFilterConfig;
+import com.helospark.site.core.it.mock.auth.CustomWithMockUser;
+import com.helospark.site.core.service.article.comment.domain.ArticleCommentDomain;
+import com.helospark.site.core.service.article.comment.domain.ArticleCommentUser;
 import com.helospark.site.core.service.common.CurrentTimeProvider;
-import com.helospark.site.core.web.article.comment.domain.ArticleCommentDomain;
 import com.helospark.site.core.web.article.comment.domain.ArticleCommentForm;
-import com.helospark.site.core.web.article.comment.domain.ArticleCommentUser;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = { Application.class, AuthorizationFilterConfig.class })
@@ -91,7 +91,7 @@ public class CommentSaveIT {
     private List<ArticleCommentDomain> expectedResult() {
         ArticleCommentDomain comment = ArticleCommentDomain.builder()
                 .withCommenter(createArticleCommentUser())
-                .withId(3)
+                .withId(4)
                 .withText("New comment")
                 .withVotes(0)
                 .withCommentTime(COMMENT_TIME)

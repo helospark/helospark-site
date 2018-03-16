@@ -6,4 +6,5 @@ export class ArticleComment {
     commentTime:string;
     votes:number;
     commenter:ArticleCommentUser;
+    myVote:number;
 }

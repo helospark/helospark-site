@@ -172,6 +172,23 @@
           }
         ]
       }
+    },
+    {
+      "changeSet": {
+        "id": "8",
+        "author": "helospark",
+        "changes": [
+          {
+            "sql": {
+              "comment": "Create comment vote table",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "CREATE TABLE article_comment_vote (user_id int NOT NULL, comment_id int NOT NULL, direction int NOT NULL, PRIMARY KEY (user_id, comment_id), FOREIGN KEY (user_id) REFERENCES application_user(id), FOREIGN KEY (comment_id) REFERENCES article_comment(id))",
+              "stripComments": true
+            }
+          }
+        ]
+      }
     }
   ]
 }

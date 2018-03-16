@@ -1,4 +1,4 @@
-package com.helospark.site.core.web.article.comment.domain;
+package com.helospark.site.core.service.article.comment.domain;
 
 import java.util.Objects;
 

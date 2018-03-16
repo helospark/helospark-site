@@ -1,4 +1,4 @@
-package com.helospark.site.core.web.article.comment;
+package com.helospark.site.core.service.article.comment.converter;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

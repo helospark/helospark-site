@@ -20,4 +20,15 @@ export class ArticleCommentService {
   voteForComment(commentId:number, vote:number) {
     return this.restService.httpPost("/comment/" + commentId + "/vote?number=" + vote, {});
   }
+
+  getVotes(comments:Array<ArticleComment>) {
+    let query:string = "";
+    for (let i = 0; i < comments.length; ++i) {
+      query += comments[i].id;
+      if (i < comments.length - 1) {
+        query += ",";
+      }
+    }
+    return this.restService.httpGet("/comment/vote/me?comments=" + query);
+  }
 }

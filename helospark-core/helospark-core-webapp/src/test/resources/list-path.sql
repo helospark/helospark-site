@@ -9,5 +9,3 @@ INSERT INTO article_detail (id, modification_time, description, data) values (4,
 INSERT INTO article (id, creation_time, details_id, category_id, url_id, title) values (3, '2017-01-01 00:00:01', 4, 3, 'pretty-url-id-3', 'Pretty id');
 INSERT INTO article_detail (id, modification_time, description, data) values (5, '2017-01-02 00:00:01', 'BlogEntry3', RAWTOHEX('BlogEntry3'));
 INSERT INTO article (id, creation_time, details_id, category_id, url_id, title) values (4, '2017-01-01 00:00:01', 5, 3, 'pretty-url-id-4', 'Pretty id');
-
-INSERT INTO article_comment (id, text, comment_time, article_id, commenter_id) values (1, 'comment 1','2017-01-02 00:00:01', 1, 1)

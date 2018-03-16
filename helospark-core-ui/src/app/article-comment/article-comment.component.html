@@ -46,11 +46,11 @@
         <span class="vote-number">{{comment.votes}}</span>
 
         <span (click)="onVote(comment.id, 1)" class="link nounderline vote-up">
-          <!--<span class="fa fa-thumbs-up fa-lg {{comment.currentUserVoteDirection == 1 ? 'vote-active' : 'vote-passive'}}"></span>-->
+          <span class="fa fa-thumbs-up fa-lg {{comment.myVote == 1 ? 'vote-active' : 'vote-passive'}}"></span>
         </span>
 
         <span (click)="onVote(comment.id, -1)" class="link nounderline vote-down">
-          <!--<span class="fa fa-thumbs-down fa-lg {{comment.currentUserVoteDirection == -1 ? 'vote-active' : 'vote-passive'}}"></span>-->
+          <span class="fa fa-thumbs-down fa-lg {{comment.myVote == -1 ? 'vote-active' : 'vote-passive'}}"></span>
         </span>
       </div>
     </div>
