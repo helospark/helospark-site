@@ -9,8 +9,12 @@ export class ArticleCommentService {
 
   constructor(private restService:RestCommunicatorService) { }
 
-  getComments(articleId:string, page:number):Observable<Array<ArticleComment>> {
-    return this.restService.httpGet("/comment?articleId=" + articleId + "&page=" + page)
+  getComments(articleId:string, page:number, parentCommentId:number):Observable<Array<ArticleComment>> {
+    if (parentCommentId == -1) {
+      return this.restService.httpGet("/comment?articleId=" + articleId + "&page=" + page)
+    } else {
+      return this.restService.httpGet("/comment/" + parentCommentId + "/replies")      
+    }
   }
 
   sendComment(comment:ArticleCommentForm):Observable<any> {

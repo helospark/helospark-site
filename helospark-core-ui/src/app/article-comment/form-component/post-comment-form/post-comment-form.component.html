@@ -1,0 +1,13 @@
+<form *ngIf="visible">
+  <div>
+    <textarea name="comment-text" [(ngModel)]="comment.text"></textarea>
+  </div>
+  <!--<div>Prove that you are a human (if captcha is not loaded, wait a bit):</div>
+  <div class="col-sm-5">
+    <div class="g-recaptcha" data-theme="dark" data-sitekey="6LfdQhITAAAAAFPEupAVPlttSGDufEyuCAh-66vP"></div>
+    <form:errors cssClass="form-error" path="captcha" />
+  </div>-->
+  <div class="float_cleaner">
+    <button (click)="onCommentSubmit()" class="btn btn-primary btn-sm">Submit comment</button>
+  </div>
+</form>

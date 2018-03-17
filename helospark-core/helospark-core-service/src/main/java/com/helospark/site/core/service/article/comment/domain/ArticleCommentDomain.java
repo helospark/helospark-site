@@ -8,11 +8,11 @@ import javax.annotation.Generated;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 @JsonDeserialize(builder = ArticleCommentDomain.Builder.class)
 public class ArticleCommentDomain {
     private Integer id;
+    private Integer childComments;
     private String text;
     private ZonedDateTime commentTime;
     private Integer votes;
@@ -21,6 +21,7 @@ public class ArticleCommentDomain {
     @Generated("SparkTools")
     private ArticleCommentDomain(Builder builder) {
         this.id = builder.id;
+        this.childComments = builder.childComments;
         this.text = builder.text;
         this.commentTime = builder.commentTime;
         this.votes = builder.votes;
@@ -35,6 +36,10 @@ public class ArticleCommentDomain {
         return text;
     }
 
+    public Integer getChildComments() {
+        return childComments;
+    }
+
     public ZonedDateTime getCommentTime() {
         return commentTime;
     }
@@ -45,16 +50,6 @@ public class ArticleCommentDomain {
 
     public ArticleCommentUser getCommenter() {
         return commenter;
-    }
-
-    @Generated("SparkTools")
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    @Generated("SparkTools")
-    public static Builder builderFrom(ArticleCommentDomain articleDomain) {
-        return new Builder(articleDomain);
     }
 
     @Override
@@ -79,9 +74,19 @@ public class ArticleCommentDomain {
     }
 
     @Generated("SparkTools")
-    @JsonPOJOBuilder
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    @Generated("SparkTools")
+    public static Builder builderFrom(ArticleCommentDomain articleCommentDomain) {
+        return new Builder(articleCommentDomain);
+    }
+
+    @Generated("SparkTools")
     public static final class Builder {
         private Integer id;
+        private Integer childComments;
         private String text;
         private ZonedDateTime commentTime;
         private Integer votes;
@@ -90,16 +95,22 @@ public class ArticleCommentDomain {
         private Builder() {
         }
 
-        private Builder(ArticleCommentDomain articleDomain) {
-            this.id = articleDomain.id;
-            this.text = articleDomain.text;
-            this.commentTime = articleDomain.commentTime;
-            this.votes = articleDomain.votes;
-            this.commenter = articleDomain.commenter;
+        private Builder(ArticleCommentDomain articleCommentDomain) {
+            this.id = articleCommentDomain.id;
+            this.childComments = articleCommentDomain.childComments;
+            this.text = articleCommentDomain.text;
+            this.commentTime = articleCommentDomain.commentTime;
+            this.votes = articleCommentDomain.votes;
+            this.commenter = articleCommentDomain.commenter;
         }
 
         public Builder withId(Integer id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder withChildComments(Integer childComments) {
+            this.childComments = childComments;
             return this;
         }
 

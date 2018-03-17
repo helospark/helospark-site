@@ -24,6 +24,8 @@ public class ArticleCommentEntity {
 
     private ZonedDateTime commentTime;
 
+    private Integer parentCommentId;
+
     @Lazy
     @ManyToOne
     private ApplicationUser commenter;
@@ -37,6 +39,7 @@ public class ArticleCommentEntity {
         this.id = builder.id;
         this.text = builder.text;
         this.commentTime = builder.commentTime;
+        this.parentCommentId = builder.parentCommentId;
         this.commenter = builder.commenter;
         this.article = builder.article;
     }
@@ -100,6 +103,7 @@ public class ArticleCommentEntity {
         private Integer id;
         private String text;
         private ZonedDateTime commentTime;
+        private Integer parentCommentId;
         private ApplicationUser commenter;
         private Article article;
 
@@ -110,6 +114,7 @@ public class ArticleCommentEntity {
             this.id = articleCommentEntity.id;
             this.text = articleCommentEntity.text;
             this.commentTime = articleCommentEntity.commentTime;
+            this.parentCommentId = articleCommentEntity.parentCommentId;
             this.commenter = articleCommentEntity.commenter;
             this.article = articleCommentEntity.article;
         }
@@ -126,6 +131,11 @@ public class ArticleCommentEntity {
 
         public Builder withCommentTime(ZonedDateTime commentTime) {
             this.commentTime = commentTime;
+            return this;
+        }
+
+        public Builder withParentCommentId(Integer parentCommentId) {
+            this.parentCommentId = parentCommentId;
             return this;
         }
 

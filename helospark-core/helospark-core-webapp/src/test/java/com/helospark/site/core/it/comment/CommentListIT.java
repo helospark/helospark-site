@@ -104,6 +104,7 @@ public class CommentListIT {
                 .withId(1)
                 .withText("comment 1")
                 .withVotes(0)
+                .withChildComments(0)
                 .withCommentTime(ZonedDateTime.of(2017, 01, 01, 23, 0, 1, 0, ZoneId.of("UTC")))
                 .build();
 
@@ -112,6 +113,7 @@ public class CommentListIT {
                 .withId(2)
                 .withText("comment 2")
                 .withVotes(0)
+                .withChildComments(0)
                 .withCommentTime(ZonedDateTime.of(2017, 01, 02, 23, 0, 1, 0, ZoneId.of("UTC")))
                 .build();
 

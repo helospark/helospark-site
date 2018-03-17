@@ -1,5 +1,6 @@
 package com.helospark.site.core.it.comment;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -28,7 +29,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.helospark.site.core.Application;
 import com.helospark.site.core.it.mock.auth.AuthorizationFilterConfig;
-import com.helospark.site.core.it.mock.auth.CustomWithMockUser;
 import com.helospark.site.core.service.article.comment.domain.ArticleCommentDomain;
 import com.helospark.site.core.service.article.comment.domain.ArticleCommentUser;
 import com.helospark.site.core.service.common.CurrentTimeProvider;
@@ -40,8 +40,7 @@ import com.helospark.site.core.web.article.comment.domain.ArticleCommentForm;
 @TestPropertySource(locations = { "classpath:global-it-overrides.properties" })
 @Sql(scripts = "classpath:/comment-list.sql", executionPhase = BEFORE_TEST_METHOD)
 @Sql(scripts = "classpath:/clean-up.sql", executionPhase = AFTER_TEST_METHOD)
-@CustomWithMockUser
-public class CommentSaveIT {
+public class CommentRepliesIT {
     // Why do you do this to me, Java?
     private static final ParameterizedTypeReference<List<ArticleCommentDomain>> RESPONSE_TYPE = new ParameterizedTypeReference<List<ArticleCommentDomain>>() {
     };
@@ -51,27 +50,80 @@ public class CommentSaveIT {
     private CurrentTimeProvider currentTimeProvider;
 
     @Test
-    public void testSaveCommentShouldReturn200(@Autowired TestRestTemplate restTemplate) {
+    public void testSaveCommentsToChild(@Autowired TestRestTemplate restTemplate) {
         // GIVEN
 
         // WHEN
         ResponseEntity<Void> result = saveComment(restTemplate);
-
         // THEN
         assertThat(result.getStatusCodeValue(), is(200));
     }
 
     @Test
-    public void testSaveCommentShouldBeReturned(@Autowired TestRestTemplate restTemplate) {
+    public void testSaveCommentsToChildAndGetArticleComment(@Autowired TestRestTemplate restTemplate) {
         // GIVEN
         saveComment(restTemplate);
 
         // WHEN
-        ResponseEntity<List<ArticleCommentDomain>> result = restTemplate.exchange("/comment?articleId=2&page=0", HttpMethod.GET, null, RESPONSE_TYPE);
+        ResponseEntity<List<ArticleCommentDomain>> result = restTemplate.exchange("/comment?articleId=1&page=0", HttpMethod.GET, null, RESPONSE_TYPE);
 
         // THEN
         assertThat(result.getStatusCodeValue(), is(200));
-        assertThat(result.getBody(), is(expectedResult()));
+        assertThat(result.getBody(), is(createExpected()));
+    }
+
+    @Test
+    public void testSaveCommentsToChildAndGetCommentReplies(@Autowired TestRestTemplate restTemplate) {
+        // GIVEN
+        saveComment(restTemplate);
+
+        // WHEN
+        ResponseEntity<List<ArticleCommentDomain>> result = restTemplate.exchange("/comment/1/replies", HttpMethod.GET, null, RESPONSE_TYPE);
+
+        // THEN
+        assertThat(result.getStatusCodeValue(), is(200));
+        assertThat(result.getBody(), is(createExpectedReplies()));
+    }
+
+    private Object createExpectedReplies() {
+        ArticleCommentDomain replyComment = ArticleCommentDomain.builder()
+                .withCommenter(createArticleCommentUser())
+                .withId(4)
+                .withText("New comment")
+                .withVotes(0)
+                .withChildComments(0)
+                .withCommentTime(COMMENT_TIME)
+                .build();
+        return Collections.singletonList(replyComment);
+    }
+
+    private List<ArticleCommentDomain> createExpected() {
+        ArticleCommentDomain firstComment = ArticleCommentDomain.builder()
+                .withCommenter(createArticleCommentUser())
+                .withId(1)
+                .withText("comment 1")
+                .withVotes(0)
+                .withChildComments(1)
+                .withCommentTime(ZonedDateTime.of(2017, 01, 01, 23, 0, 1, 0, ZoneId.of("UTC")))
+                .build();
+
+        ArticleCommentDomain secondComment = ArticleCommentDomain.builder()
+                .withCommenter(createArticleCommentUser())
+                .withId(2)
+                .withText("comment 2")
+                .withVotes(0)
+                .withChildComments(0)
+                .withCommentTime(ZonedDateTime.of(2017, 01, 02, 23, 0, 1, 0, ZoneId.of("UTC")))
+                .build();
+
+        return asList(secondComment, firstComment);
+    }
+
+    private ArticleCommentUser createArticleCommentUser() {
+        return ArticleCommentUser.builder()
+                .withId(1)
+                .withName("user")
+                .build();
     }
 
     private ResponseEntity<Void> saveComment(TestRestTemplate restTemplate) {
@@ -85,25 +137,7 @@ public class CommentSaveIT {
         ArticleCommentForm form = new ArticleCommentForm();
         form.setArticleId(2);
         form.setText("New comment");
+        form.setParentCommentId(1);
         return form;
-    }
-
-    private List<ArticleCommentDomain> expectedResult() {
-        ArticleCommentDomain comment = ArticleCommentDomain.builder()
-                .withCommenter(createArticleCommentUser())
-                .withId(4)
-                .withText("New comment")
-                .withVotes(0)
-                .withChildComments(0)
-                .withCommentTime(COMMENT_TIME)
-                .build();
-        return Collections.singletonList(comment);
-    }
-
-    private ArticleCommentUser createArticleCommentUser() {
-        return ArticleCommentUser.builder()
-                .withId(1)
-                .withName("user")
-                .build();
     }
 }

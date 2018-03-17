@@ -27,6 +27,8 @@ import { ArticleDetailService } from './article-details/article-details-service/
 import { LoginFormComponent } from './login-form/login-form.component';
 import { LoginService } from './common/login/login.service';
 import { ArticleCommentComponent } from './article-comment/article-comment.component';
+import { PostCommentFormComponent } from './article-comment/form-component/post-comment-form/post-comment-form.component';
+import { CommentSectionComponent } from './article-comment/comment-section/comment-section/comment-section.component';
 
 
 const routes: Routes = [
@@ -46,7 +48,9 @@ const routes: Routes = [
     ArticleDetailsComponent,
     LoginDialogComponent,
     LoginFormComponent,
-    ArticleCommentComponent
+    ArticleCommentComponent,
+    PostCommentFormComponent,
+    CommentSectionComponent
   ],
   imports: [
     BrowserModule,

@@ -189,6 +189,23 @@
           }
         ]
       }
+    },
+    {
+      "changeSet": {
+        "id": "9",
+        "author": "helospark",
+        "changes": [
+          {
+            "sql": {
+              "comment": "Parent comment",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "ALTER TABLE article_comment ADD parent_comment_id int",
+              "stripComments": true
+            }
+          }
+        ]
+      }
     }
   ]
 }

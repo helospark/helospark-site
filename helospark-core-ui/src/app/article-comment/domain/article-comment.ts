@@ -7,4 +7,6 @@ export class ArticleComment {
     votes:number;
     commenter:ArticleCommentUser;
     myVote:number;
+    childComments:number;
+    childrenLoaded:boolean = false;
 }

@@ -29,9 +29,19 @@ public class CommentService {
 
     public List<ArticleCommentDomain> getComments(Integer page, Integer articleId) {
         Pageable pageable = pageableFactory.createPageable(page);
-        List<ArticleCommentEntity> comments = commentRepository.findAllByArticleId(articleId, pageable);
+        List<ArticleCommentEntity> comments = commentRepository.findAllByArticleIdAndParentCommentIdIsNull(articleId, pageable);
+        return convertComments(comments);
+    }
+
+    public List<ArticleCommentDomain> getChildComments(Integer commentId) {
+        List<ArticleCommentEntity> comments = commentRepository.findAllByParentCommentId(commentId);
+        return convertComments(comments);
+    }
+
+    private List<ArticleCommentDomain> convertComments(List<ArticleCommentEntity> comments) {
         List<Integer> votes = getVotes(comments);
-        return commentDomainConverter.convert(comments, votes);
+        List<Integer> childComments = getChildComments(comments);
+        return commentDomainConverter.convert(comments, votes, childComments);
     }
 
     private List<Integer> getVotes(List<ArticleCommentEntity> comments) {
@@ -40,6 +50,18 @@ public class CommentService {
         return comments.stream()
                 .map(comment -> voteService.countVotes(comment))
                 .collect(Collectors.toList());
+    }
+
+    private List<Integer> getChildComments(List<ArticleCommentEntity> comments) {
+        // TODO: this could be embedded in the DB to avoid the recalculations
+        // but it has good cacheability (though in distributed system it may not)
+        return comments.stream()
+                .map(comment -> getChildComments(comment))
+                .collect(Collectors.toList());
+    }
+
+    private Integer getChildComments(ArticleCommentEntity comment) {
+        return this.commentRepository.countByParentCommentId(comment.getId());
     }
 
 }

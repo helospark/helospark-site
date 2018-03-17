@@ -1,0 +1,42 @@
+<ng-container *ngFor="let comment of comments">
+  <div class="comment-block" [style.margin-left.px]="levelValue * 30">
+    <div class="comment-head bottom-separated">
+      <span>
+        <a routerLink="['user', 'details', comment.commenter.id]" rel="nofollow">{{comment.commenter.name}}</a>
+      </span>
+      <span class="comment-time pull-right">
+        <span class="timeago" title="{{comment.commentTime}}"></span> ({{comment.commentTime}})</span>
+    </div>
+    <div class="comment-body bottom-separated">
+      <div>
+        {{comment.text}}
+      </div>
+    </div>
+    <div class="comment-footer">
+      <div *ngIf="authStore.isLoggedIn()">
+        <span (click)="commentForm.toggleVisible()" class="link nounderline answerLink">Answer</span>
+      </div>
+      <div *ngIf="authStore.isLoggedOut()">
+        <span class="link" data-toggle="popover" data-trigger="click" data-content="Log in to answer!">Answer</span>
+      </div>
+      <span class="vote-number">{{comment.votes}}</span>
+
+      <span (click)="onVote(comment.id, 1)" class="link nounderline vote-up">
+        <span class="fa fa-thumbs-up fa-lg {{comment.myVote == 1 ? 'vote-active' : 'vote-passive'}}"></span>
+      </span>
+
+      <span (click)="onVote(comment.id, -1)" class="link nounderline vote-down">
+        <span class="fa fa-thumbs-down fa-lg {{comment.myVote == -1 ? 'vote-active' : 'vote-passive'}}"></span>
+      </span>
+      <app-post-comment-form #commentForm [visible]="false" [articleId]="articleId" [parentCommentId]="comment.id"></app-post-comment-form>
+    </div>
+    <div *ngIf="comment.childComments > 0">
+      <div *ngIf="comment.childrenLoaded == null">
+        <a (click)="comment.childrenLoaded=true">There are {{comment.childComments}} replies, click here to see them.</a>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="comment.childrenLoaded == true">
+    <app-comment-section [articleId]="articleId" [level]="addNumbers(levelValue, 1)" [parentCommentId]="comment.id"></app-comment-section>
+  </div>
+</ng-container>

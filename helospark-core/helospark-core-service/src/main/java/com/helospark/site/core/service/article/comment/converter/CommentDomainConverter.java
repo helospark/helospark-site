@@ -13,21 +13,22 @@ import com.helospark.site.core.service.article.user.ApplicationUser;
 @Component
 public class CommentDomainConverter {
 
-    public List<ArticleCommentDomain> convert(List<ArticleCommentEntity> articles, List<Integer> votes) {
+    public List<ArticleCommentDomain> convert(List<ArticleCommentEntity> articles, List<Integer> votes, List<Integer> childComments) {
         List<ArticleCommentDomain> result = new ArrayList<>();
         for (int i = 0; i < articles.size(); ++i) {
-            result.add(convert(articles.get(i), votes.get(i)));
+            result.add(convert(articles.get(i), votes.get(i), childComments.get(i)));
         }
         return result;
     }
 
-    private ArticleCommentDomain convert(ArticleCommentEntity article, Integer votes) {
+    private ArticleCommentDomain convert(ArticleCommentEntity article, Integer votes, Integer childComments) {
         return ArticleCommentDomain.builder()
                 .withCommenter(convertCommenter(article.getCommenter()))
                 .withCommentTime(article.getCommentTime())
                 .withId(article.getId())
                 .withText(article.getText())
                 .withVotes(votes)
+                .withChildComments(childComments)
                 .build();
     }
 

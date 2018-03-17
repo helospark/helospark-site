@@ -4,6 +4,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.lang.Nullable;
+
 public class ArticleCommentForm {
     @NotNull
     private Integer articleId;
@@ -12,6 +14,17 @@ public class ArticleCommentForm {
     @NotEmpty
     @Size(max = 1000)
     private String text;
+
+    @Nullable
+    private Integer parentCommentId;
+
+    public Integer getParentCommentId() {
+        return parentCommentId;
+    }
+
+    public void setParentCommentId(Integer parentCommentId) {
+        this.parentCommentId = parentCommentId;
+    }
 
     public Integer getArticleId() {
         return articleId;

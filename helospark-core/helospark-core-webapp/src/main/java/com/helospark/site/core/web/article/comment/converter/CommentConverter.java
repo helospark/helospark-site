@@ -24,6 +24,7 @@ public class CommentConverter {
         Article article = findArticle(form.getArticleId());
         return ArticleCommentEntity.builder()
                 .withArticle(article)
+                .withParentCommentId(form.getParentCommentId())
                 .withCommenter(activeUser)
                 .withText(form.getText())
                 .withCommentTime(currentTimeProvider.currentZonedDateTime())

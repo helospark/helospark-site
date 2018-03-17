@@ -3,9 +3,12 @@ package com.helospark.site.core.web.article.comment;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,21 +43,36 @@ public class ArticleCommentController {
     }
 
     @GetMapping
-    public List<ArticleCommentDomain> getComments(@RequestParam("page") Integer page, @RequestParam("articleId") Integer articleId) {
+    public List<ArticleCommentDomain> getComments(@RequestParam("page") @NotNull @Min(0) Integer page,
+            @RequestParam("articleId") @NotNull @Min(0) Integer articleId) {
         assertArticleExists(articleId);
         return commentService.getComments(page, articleId);
     }
 
-    private void assertArticleExists(Integer articleId) {
-        articleRepository.findById(articleId)
-                .orElseThrow(() -> new ArticleNotFoundException("Article not found"));
+    @GetMapping("/{commentId}/replies")
+    public List<ArticleCommentDomain> getChildComments(@PathVariable("commentId") @NotNull @Min(0) Integer commentId) {
+        return commentService.getChildComments(commentId);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_USER')")
     public void postComment(@RequestBody @Valid ArticleCommentForm comment, @InjectLoggedInUser ApplicationUser activeUser) {
+        assertArticleExists(comment.getArticleId());
+        assertCommentExists(comment.getParentCommentId());
         ArticleCommentEntity commentEntity = commentConverter.convert(comment, activeUser);
         commentRepository.save(commentEntity);
     }
 
+    // TODO: move to annotation
+    private void assertArticleExists(Integer articleId) {
+        articleRepository.findById(articleId)
+                .orElseThrow(() -> new ArticleNotFoundException("Article not found"));
+    }
+
+    private void assertCommentExists(Integer parentCommentId) {
+        if (parentCommentId != null) {
+            commentRepository.findById(parentCommentId)
+                    .orElseThrow(() -> new CommentDoesNotExistException("Parent comment does not exist"));
+        }
+    }
 }
