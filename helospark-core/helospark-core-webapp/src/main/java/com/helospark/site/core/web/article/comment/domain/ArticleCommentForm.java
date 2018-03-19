@@ -6,8 +6,12 @@ import javax.validation.constraints.Size;
 
 import org.springframework.lang.Nullable;
 
+import com.helospark.site.core.web.common.article.ValidArticleId;
+import com.helospark.site.core.web.common.comment.ValidCommentId;
+
 public class ArticleCommentForm {
     @NotNull
+    @ValidArticleId
     private Integer articleId;
 
     @NotNull
@@ -16,6 +20,7 @@ public class ArticleCommentForm {
     private String text;
 
     @Nullable
+    @ValidCommentId
     private Integer parentCommentId;
 
     public Integer getParentCommentId() {

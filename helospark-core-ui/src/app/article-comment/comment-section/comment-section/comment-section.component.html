@@ -28,7 +28,7 @@
       <span (click)="onVote(comment.id, -1)" class="link nounderline vote-down">
         <span class="fa fa-thumbs-down fa-lg {{comment.myVote == -1 ? 'vote-active' : 'vote-passive'}}"></span>
       </span>
-      <app-post-comment-form #commentForm [visible]="false" [articleId]="articleId" [parentCommentId]="comment.id"></app-post-comment-form>
+      <app-post-comment-form #commentForm [visible]="false" [articleId]="articleId" [parentCommentId]="comment.id" (commentPosted)="onCommentPosted($event, comment.id, childCommentSection)"></app-post-comment-form>
     </div>
     <div *ngIf="comment.childComments > 0">
       <div *ngIf="comment.childrenLoaded == null">
@@ -37,6 +37,6 @@
     </div>
   </div>
   <div *ngIf="comment.childrenLoaded == true">
-    <app-comment-section [articleId]="articleId" [level]="addNumbers(levelValue, 1)" [parentCommentId]="comment.id"></app-comment-section>
+    <app-comment-section #childCommentComponent (commentsLoaded)="addChild(comment.id, childCommentComponent)" [articleId]="articleId" [level]="addNumbers(levelValue, 1)" [parentCommentId]="comment.id"></app-comment-section>
   </div>
 </ng-container>

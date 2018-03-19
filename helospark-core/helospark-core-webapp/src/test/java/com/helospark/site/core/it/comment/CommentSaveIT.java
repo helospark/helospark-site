@@ -1,6 +1,8 @@
 package com.helospark.site.core.it.comment;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
@@ -55,16 +57,28 @@ public class CommentSaveIT {
         // GIVEN
 
         // WHEN
-        ResponseEntity<Void> result = saveComment(restTemplate);
+        ResponseEntity<Void> result = saveComment(restTemplate, Void.class);
 
         // THEN
         assertThat(result.getStatusCodeValue(), is(200));
     }
 
     @Test
+    public void testSaveCommentShouldReturnSavedComment(@Autowired TestRestTemplate restTemplate) {
+        // GIVEN
+
+        // WHEN
+        ResponseEntity<ArticleCommentDomain> result = saveComment(restTemplate, ArticleCommentDomain.class);
+
+        // THEN
+        assertThat(result.getBody().getId(), is(not(nullValue())));
+        assertThat(result.getBody().getText(), is("New comment"));
+    }
+
+    @Test
     public void testSaveCommentShouldBeReturned(@Autowired TestRestTemplate restTemplate) {
         // GIVEN
-        saveComment(restTemplate);
+        saveComment(restTemplate, Void.class);
 
         // WHEN
         ResponseEntity<List<ArticleCommentDomain>> result = restTemplate.exchange("/comment?articleId=2&page=0", HttpMethod.GET, null, RESPONSE_TYPE);
@@ -74,11 +88,10 @@ public class CommentSaveIT {
         assertThat(result.getBody(), is(expectedResult()));
     }
 
-    private ResponseEntity<Void> saveComment(TestRestTemplate restTemplate) {
+    private <T> ResponseEntity<T> saveComment(TestRestTemplate restTemplate, Class<T> responseType) {
         given(currentTimeProvider.currentZonedDateTime()).willReturn(COMMENT_TIME);
         ArticleCommentForm form = createForm();
-        ResponseEntity<Void> result = restTemplate.postForEntity("/comment", form, Void.class);
-        return result;
+        return restTemplate.postForEntity("/comment", form, responseType);
     }
 
     private ArticleCommentForm createForm() {

@@ -1,8 +1,10 @@
+import { EventEmitter } from '@angular/core';
+import { ArticleCommentForm } from './../../domain/article-comment-form';
 import { ArticleCommentService } from './../../service/article-comment.service';
 import { AuthenticationStoreService } from './../../../common/authentication-store/authentication-store.service';
 import { ArticleCommentVote } from './../../domain/article-comment-vote';
 import { ArticleComment } from './../../domain/article-comment';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-comment-section',
@@ -21,6 +23,11 @@ export class CommentSectionComponent implements OnInit {
   @Input("level")
   levelValue:number;
 
+  @Output()
+  commentsLoaded:EventEmitter<any> = new EventEmitter();
+
+  loadedChildren = {};
+
   constructor(private authStore:AuthenticationStoreService, private commentService:ArticleCommentService) { }
 
   ngOnInit() {
@@ -28,7 +35,10 @@ export class CommentSectionComponent implements OnInit {
             .subscribe(comments => {
               this.addToComments(comments);
               this.commentService.getVotes(comments)
-                .subscribe(result => this.fillMyVotes(result));
+                .subscribe(result => {
+                  this.commentsLoaded.emit(null);
+                  this.fillMyVotes(result)
+                });
             });
   }
 
@@ -67,5 +77,20 @@ export class CommentSectionComponent implements OnInit {
     // Why???????
     return +a + +b;
   }
+  
+  onCommentPosted(comment:ArticleComment, parentCommentId, childCommentSection:CommentSectionComponent) {
+    console.log("Recieved event " + comment);
+    let parentComment = this.findComment(parentCommentId);
+    if (!parentComment.childrenLoaded) {
+      parentComment.childrenLoaded = true;
+    } else {
+      this.loadChildComments[parentCommentId].comments.push(comment);
+    }
+  }
+
+  addChild(id:string, commentComponent:CommentSectionComponent) {
+    console.log(id + " " + commentComponent);
+    this.loadChildComments[id] = commentComponent;
+  } 
 
 }

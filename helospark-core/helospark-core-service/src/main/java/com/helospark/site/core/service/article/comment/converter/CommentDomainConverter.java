@@ -21,7 +21,7 @@ public class CommentDomainConverter {
         return result;
     }
 
-    private ArticleCommentDomain convert(ArticleCommentEntity article, Integer votes, Integer childComments) {
+    public ArticleCommentDomain convert(ArticleCommentEntity article, Integer votes, Integer childComments) {
         return ArticleCommentDomain.builder()
                 .withCommenter(convertCommenter(article.getCommenter()))
                 .withCommentTime(article.getCommentTime())

@@ -1,7 +1,7 @@
 package com.helospark.site.core.service.article.comment;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -38,29 +38,34 @@ public class CommentService {
         return convertComments(comments);
     }
 
+    public ArticleCommentDomain saveComment(ArticleCommentEntity commentEntity) {
+        ArticleCommentEntity result = commentRepository.save(commentEntity);
+        return convertComment(result);
+    }
+
     private List<ArticleCommentDomain> convertComments(List<ArticleCommentEntity> comments) {
-        List<Integer> votes = getVotes(comments);
-        List<Integer> childComments = getChildComments(comments);
-        return commentDomainConverter.convert(comments, votes, childComments);
+        List<ArticleCommentDomain> result = new ArrayList<>();
+        for (ArticleCommentEntity commentEntity : comments) {
+            ArticleCommentDomain converted = convertComment(commentEntity);
+            result.add(converted);
+        }
+        return result;
     }
 
-    private List<Integer> getVotes(List<ArticleCommentEntity> comments) {
+    private ArticleCommentDomain convertComment(ArticleCommentEntity commentEntity) {
         // TODO: this could be embedded in the DB to avoid the recalculations
         // but it has good cacheability (though in distributed system it may not)
-        return comments.stream()
-                .map(comment -> voteService.countVotes(comment))
-                .collect(Collectors.toList());
+        Integer votes = getVote(commentEntity);
+        Integer childComments = getChildComment(commentEntity);
+        ArticleCommentDomain converted = commentDomainConverter.convert(commentEntity, votes, childComments);
+        return converted;
     }
 
-    private List<Integer> getChildComments(List<ArticleCommentEntity> comments) {
-        // TODO: this could be embedded in the DB to avoid the recalculations
-        // but it has good cacheability (though in distributed system it may not)
-        return comments.stream()
-                .map(comment -> getChildComments(comment))
-                .collect(Collectors.toList());
+    private Integer getVote(ArticleCommentEntity comment) {
+        return voteService.countVotes(comment);
     }
 
-    private Integer getChildComments(ArticleCommentEntity comment) {
+    private Integer getChildComment(ArticleCommentEntity comment) {
         return this.commentRepository.countByParentCommentId(comment.getId());
     }
 

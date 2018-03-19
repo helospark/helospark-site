@@ -1,6 +1,7 @@
+import { EventEmitter } from '@angular/core';
 import { ArticleCommentService } from './../../service/article-comment.service';
 import { ArticleCommentForm } from './../../domain/article-comment-form';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-post-comment-form',
@@ -15,6 +16,8 @@ export class PostCommentFormComponent implements OnInit {
   parentCommentId:string;
   @Input("visible")
   visible:boolean;
+  @Output()
+  commentPosted:EventEmitter<any> = new EventEmitter();
 
   constructor(private commentService:ArticleCommentService) { }
 
@@ -32,8 +35,11 @@ export class PostCommentFormComponent implements OnInit {
 
   onCommentSubmit() {
     this.commentService.sendComment(this.comment)
-          .subscribe(result => console.log("Comment sent"),
-                     error => console.log("Error"));
+          .subscribe(result => {
+            this.commentPosted.emit(result);
+            console.log("Comment sent")
+          },
+            error => console.log("Error"));
     this.initNewComment();
   }
 

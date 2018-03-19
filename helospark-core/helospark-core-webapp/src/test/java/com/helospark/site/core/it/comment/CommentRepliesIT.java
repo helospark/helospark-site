@@ -54,7 +54,8 @@ public class CommentRepliesIT {
         // GIVEN
 
         // WHEN
-        ResponseEntity<Void> result = saveComment(restTemplate);
+        ResponseEntity<Void> result = saveComment(restTemplate, 1);
+
         // THEN
         assertThat(result.getStatusCodeValue(), is(200));
     }
@@ -62,7 +63,7 @@ public class CommentRepliesIT {
     @Test
     public void testSaveCommentsToChildAndGetArticleComment(@Autowired TestRestTemplate restTemplate) {
         // GIVEN
-        saveComment(restTemplate);
+        saveComment(restTemplate, 1);
 
         // WHEN
         ResponseEntity<List<ArticleCommentDomain>> result = restTemplate.exchange("/comment?articleId=1&page=0", HttpMethod.GET, null, RESPONSE_TYPE);
@@ -75,7 +76,7 @@ public class CommentRepliesIT {
     @Test
     public void testSaveCommentsToChildAndGetCommentReplies(@Autowired TestRestTemplate restTemplate) {
         // GIVEN
-        saveComment(restTemplate);
+        saveComment(restTemplate, 1);
 
         // WHEN
         ResponseEntity<List<ArticleCommentDomain>> result = restTemplate.exchange("/comment/1/replies", HttpMethod.GET, null, RESPONSE_TYPE);
@@ -85,10 +86,21 @@ public class CommentRepliesIT {
         assertThat(result.getBody(), is(createExpectedReplies()));
     }
 
+    @Test
+    public void testSaveCommentsWithWrongParentCommentId(@Autowired TestRestTemplate restTemplate) {
+        // GIVEN
+
+        // WHEN
+        ResponseEntity<Void> result = saveComment(restTemplate, 101);
+
+        // THEN
+        assertThat(result.getStatusCodeValue(), is(400));
+    }
+
     private Object createExpectedReplies() {
         ArticleCommentDomain replyComment = ArticleCommentDomain.builder()
                 .withCommenter(createArticleCommentUser())
-                .withId(4)
+                .withId(6)
                 .withText("New comment")
                 .withVotes(0)
                 .withChildComments(0)
@@ -126,18 +138,18 @@ public class CommentRepliesIT {
                 .build();
     }
 
-    private ResponseEntity<Void> saveComment(TestRestTemplate restTemplate) {
+    private ResponseEntity<Void> saveComment(TestRestTemplate restTemplate, int parentCommentId) {
         given(currentTimeProvider.currentZonedDateTime()).willReturn(COMMENT_TIME);
-        ArticleCommentForm form = createForm();
+        ArticleCommentForm form = createForm(parentCommentId);
         ResponseEntity<Void> result = restTemplate.postForEntity("/comment", form, Void.class);
         return result;
     }
 
-    private ArticleCommentForm createForm() {
+    private ArticleCommentForm createForm(int parentCommentId) {
         ArticleCommentForm form = new ArticleCommentForm();
         form.setArticleId(2);
         form.setText("New comment");
-        form.setParentCommentId(1);
+        form.setParentCommentId(parentCommentId);
         return form;
     }
 }

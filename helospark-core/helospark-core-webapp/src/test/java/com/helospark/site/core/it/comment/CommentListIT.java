@@ -77,18 +77,18 @@ public class CommentListIT {
     }
 
     @Test
-    public void testGetCommentsShouldReturn404WhenArticleIdIsNotFound(@Autowired TestRestTemplate restTemplate) {
+    public void testGetCommentsShouldReturn400WhenArticleIdIsNotFound(@Autowired TestRestTemplate restTemplate) {
         // GIVEN
 
         // WHEN
         ResponseEntity<Void> result = restTemplate.exchange("/comment?articleId=101&page=0", HttpMethod.GET, null, Void.class);
 
         // THEN
-        assertThat(result.getStatusCodeValue(), is(404));
+        assertThat(result.getStatusCodeValue(), is(400));
     }
 
     @Test
-    public void testGetCommentsShouldReturn404EmptyListWhenCommentIsRequestedAfterLastPage(@Autowired TestRestTemplate restTemplate) {
+    public void testGetCommentsShouldReturnEmptyListWhenCommentIsRequestedAfterLastPage(@Autowired TestRestTemplate restTemplate) {
         // GIVEN
 
         // WHEN
