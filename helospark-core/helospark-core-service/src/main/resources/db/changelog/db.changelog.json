@@ -206,6 +206,50 @@
           }
         ]
       }
+    },
+    {
+      "changeSet": {
+        "id": "10",
+        "author": "helospark",
+        "changes": [
+          {
+            "sql": {
+              "comment": "Image mapping",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "CREATE TABLE local_image_filesystem_mapping (id VARCHAR(200) NOT NULL, file_path VARCHAR(1000), PRIMARY KEY (id))",
+              "stripComments": true
+            }
+          },
+          {
+            "sql": {
+              "comment": "Image table",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "CREATE TABLE image (id VARCHAR(100) NOT NULL, width int NOT NULL, height int NOT NULL, PRIMARY KEY (id))",
+              "stripComments": true
+            }
+          },
+          {
+            "sql": {
+              "comment": "Image table",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "CREATE TABLE gallery (id VARCHAR(100) NOT NULL, title VARCHAR(100) NOT NULL, description VARCHAR(500) NOT NULL, thumbnail_id VARCHAR(100), PRIMARY KEY (id))",
+              "stripComments": true
+            }
+          },
+          {
+            "sql": {
+              "comment": "Image table",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "CREATE TABLE gallery_image (id VARCHAR(100) NOT NULL,  title VARCHAR(100) NOT NULL,  description VARCHAR(500) NOT NULL,  image_entity_id VARCHAR(100) NOT NULL,  gallery_id VARCHAR(100) NOT NULL,  PRIMARY KEY (id),  FOREIGN KEY (gallery_id) REFERENCES gallery(id),  FOREIGN KEY (image_entity_id) REFERENCES image(id))",
+              "stripComments": true
+            }
+          }
+        ]
+      }
     }
   ]
 }

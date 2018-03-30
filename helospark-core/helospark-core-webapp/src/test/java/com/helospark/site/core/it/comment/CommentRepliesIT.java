@@ -100,7 +100,7 @@ public class CommentRepliesIT {
     private Object createExpectedReplies() {
         ArticleCommentDomain replyComment = ArticleCommentDomain.builder()
                 .withCommenter(createArticleCommentUser())
-                .withId(6)
+                .withId(7)
                 .withText("New comment")
                 .withVotes(0)
                 .withChildComments(0)

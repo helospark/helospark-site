@@ -3,3 +3,7 @@ DELETE FROM article_comment;
 DELETE FROM article;
 DELETE FROM article_detail;
 DELETE FROM application_user;
+DELETE FROM gallery_image;
+DELETE FROM gallery;
+DELETE FROM local_image_filesystem_mapping;
+DELETE FROM image;

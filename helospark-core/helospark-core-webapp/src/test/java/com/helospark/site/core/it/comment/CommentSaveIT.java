@@ -104,7 +104,7 @@ public class CommentSaveIT {
     private List<ArticleCommentDomain> expectedResult() {
         ArticleCommentDomain comment = ArticleCommentDomain.builder()
                 .withCommenter(createArticleCommentUser())
-                .withId(4)
+                .withId(5)
                 .withText("New comment")
                 .withVotes(0)
                 .withChildComments(0)

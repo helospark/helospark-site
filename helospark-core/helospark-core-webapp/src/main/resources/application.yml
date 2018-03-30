@@ -26,3 +26,17 @@ security:
       expirationTime: 864000000
     refresh:
       expirationTime: 31536000000
+  image:
+    secretKey: development_image_secret_key
+
+gallery:
+  thumbnail:
+    width: 200
+  large:
+    width: 800
+  notfound:
+    url: /notfound.jpg
+
+image:
+  localfilesystem:
+    basepath: /tmp/images
