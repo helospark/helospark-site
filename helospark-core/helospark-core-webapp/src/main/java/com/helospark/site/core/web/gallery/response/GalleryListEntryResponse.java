@@ -7,17 +7,22 @@ import javax.annotation.Generated;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 @JsonDeserialize(builder = GalleryListEntryResponse.Builder.class)
 public class GalleryListEntryResponse {
     private String id;
     private String thumbnailUrl;
+    private String title;
 
     @Generated("SparkTools")
     private GalleryListEntryResponse(Builder builder) {
         this.id = builder.id;
         this.thumbnailUrl = builder.thumbnailUrl;
+        this.title = builder.title;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public String getId() {
@@ -54,22 +59,12 @@ public class GalleryListEntryResponse {
     }
 
     @Generated("SparkTools")
-    public static Builder builderFrom(GalleryListEntryResponse galleryListEntryResponse) {
-        return new Builder(galleryListEntryResponse);
-    }
-
-    @JsonPOJOBuilder
-    @Generated("SparkTools")
     public static final class Builder {
         private String id;
         private String thumbnailUrl;
+        private String title;
 
         private Builder() {
-        }
-
-        private Builder(GalleryListEntryResponse galleryListEntryResponse) {
-            this.id = galleryListEntryResponse.id;
-            this.thumbnailUrl = galleryListEntryResponse.thumbnailUrl;
         }
 
         public Builder withId(String id) {
@@ -79,6 +74,11 @@ public class GalleryListEntryResponse {
 
         public Builder withThumbnailUrl(String thumbnailUrl) {
             this.thumbnailUrl = thumbnailUrl;
+            return this;
+        }
+
+        public Builder withTitle(String title) {
+            this.title = title;
             return this;
         }
 

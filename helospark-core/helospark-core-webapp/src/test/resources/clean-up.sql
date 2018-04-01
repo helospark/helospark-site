@@ -2,6 +2,8 @@ DELETE FROM article_comment_vote;
 DELETE FROM article_comment;
 DELETE FROM article;
 DELETE FROM article_detail;
+DELETE FROM user_authority;
+DELETE FROM authority;
 DELETE FROM application_user;
 DELETE FROM gallery_image;
 DELETE FROM gallery;

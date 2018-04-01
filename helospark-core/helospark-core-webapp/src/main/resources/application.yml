@@ -15,6 +15,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+  servlet:
+    multipart:
+      enabled: true
+
 article:
   list:
     pagesize: 10
@@ -40,3 +44,5 @@ gallery:
 image:
   localfilesystem:
     basepath: /tmp/images
+  cache:
+    time: 604800

@@ -1,5 +1,7 @@
 package com.helospark.site.core.web.gallery;
 
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
+
 import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +20,12 @@ public class GalleryImageController {
     private GalleryService galleryService;
     private GalleryConverter galleryConverter;
 
-    @PostMapping
+    public GalleryImageController(GalleryService galleryService, GalleryConverter galleryConverter) {
+        this.galleryService = galleryService;
+        this.galleryConverter = galleryConverter;
+    }
+
+    @PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
     public GalleryImage uploadImage(@Valid GalleryImageUploadRequest request) {
         GalleryImageEntity image = galleryService.saveImage(request);
         return galleryConverter.convertImage(image);

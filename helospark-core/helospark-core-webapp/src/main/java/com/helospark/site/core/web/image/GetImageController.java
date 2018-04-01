@@ -1,11 +1,12 @@
 package com.helospark.site.core.web.image;
 
-import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.springframework.http.MediaType.IMAGE_JPEG;
 
 import javax.validation.Valid;
 
-import org.springframework.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,10 +19,12 @@ import com.helospark.site.core.service.image.service.ImageService;
 @RestController
 @RequestMapping("/images")
 public class GetImageController {
+    private int imageCacheTime;
     private ImageService imageService;
 
-    public GetImageController(ImageService imageService) {
+    public GetImageController(ImageService imageService, @Value("${image.cache.time}") int imageCacheTime) {
         this.imageService = imageService;
+        this.imageCacheTime = imageCacheTime;
     }
 
     @GetMapping("/{imageId}")
@@ -37,9 +40,11 @@ public class GetImageController {
     }
 
     private ResponseEntity<byte[]> createResponse(byte[] data) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", IMAGE_JPEG_VALUE);
-        return new ResponseEntity<byte[]>(data, headers, OK);
+        return ResponseEntity.ok()
+                .contentType(IMAGE_JPEG)
+                .varyBy("Cache-Control")
+                .cacheControl(CacheControl.maxAge(imageCacheTime, SECONDS).cachePublic())
+                .body(data);
     }
 
 }

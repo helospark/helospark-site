@@ -1,0 +1,77 @@
+.image {
+	float: left;
+	width: 200px;
+	height: 160px;
+	text-align: center;
+	margin: 13px;
+    position: relative;
+}
+
+.image:before {
+	content: "";
+	height: 160px;
+	width: 200px;
+	background: #aaa;
+	border: 6px solid #eee;
+	position: absolute;
+	z-index: -2;
+	top: 0px;
+	left: -10px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+	transform: rotate(1.6deg);
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.image:after {
+    content: "";
+    height: 160px;
+    width: 200px;
+    background: #aaa;
+    border: 6px solid #eee;
+    position: absolute;
+    z-index: -1;
+    top: 0px;
+    left: -10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transform: rotate(-1.6deg);
+    -webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+a:hover img {
+    filter: brightness(1.2);
+}
+
+.thumbnail-image img {
+    margin-bottom: 4px;
+}
+
+.thumbnail-image {
+    border: 5px #eee solid;
+    background-color: #eee;
+    border-bottom: 13px #eee solid;
+    overflow: hidden;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.7);
+    text-align: center;
+    font-family: Purisa, arial;
+    font-size: 12pt;
+    font-weight: bold;
+    color: black;
+    transform: rotate(-0.8deg);
+    -webkit-backface-visibility: hidden;
+}
+
+.image:nth-child(even) .thumbnail-image {
+    transform: rotate(1.6deg);
+    -webkit-backface-visibility: hidden;
+}
+
+.image a {
+    text-decoration: none;
+}
+
+@font-face {
+    font-family: 'Purisa';
+    src: local('Purisa'), url('/resources/fonts/Purisa.ttf') format('truetype');
+}

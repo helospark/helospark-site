@@ -1,0 +1,20 @@
+<div id="content">
+  <div class="content_box">
+    <h1>Image galleries</h1>
+    Here you can find some images I have created or taken. Choose a category to see all images in it.
+  </div>
+  <div *ngIf="authenticationStore.isAdmin()">
+    <a class="btn btn-primary" [routerLink]="['/newgallery']">Create gallery</a>
+  </div>
+  <div id="galleries">
+    <div *ngFor="let gallery of galleryList">
+      <a [routerLink]="[gallery.id]">
+        <div class="image">
+          <div class="thumbnail-image">
+            <img [src]="imageServer + gallery.thumbnailUrl" width="200" />
+            {{gallery.title}}
+        </div>
+      </div>
+    </a>
+  </div>
+</div>

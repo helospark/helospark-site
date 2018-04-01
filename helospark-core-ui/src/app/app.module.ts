@@ -29,12 +29,20 @@ import { LoginService } from './common/login/login.service';
 import { ArticleCommentComponent } from './article-comment/article-comment.component';
 import { PostCommentFormComponent } from './article-comment/form-component/post-comment-form/post-comment-form.component';
 import { CommentSectionComponent } from './article-comment/comment-section/comment-section/comment-section.component';
-
+import { GalleryComponent } from './gallery/gallery.component';
+import { CreateGalleryComponent } from './create-gallery/create-gallery.component';
+import { GalleryDetailComponent } from './gallery-detail/gallery-detail.component';
+import { GalleryImageUploadComponent } from './gallery-image-upload/gallery-image-upload.component';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'category/:categoryName', component: ArticleListComponent },
-  { path: 'category/:categoryName/article/:articleName', component: ArticleDetailsComponent }
+  { path: 'category/:categoryName/article/:articleName', component: ArticleDetailsComponent },
+  { path: 'gallery', component: GalleryComponent },
+  { path: 'gallery/:galleryId', component: GalleryDetailComponent },
+  { path: 'gallery/:galleryId/upload', component: GalleryImageUploadComponent },
+  { path: 'newgallery', component: CreateGalleryComponent }
  ];
 
 @NgModule({
@@ -50,14 +58,19 @@ const routes: Routes = [
     LoginFormComponent,
     ArticleCommentComponent,
     PostCommentFormComponent,
-    CommentSectionComponent
+    CommentSectionComponent,
+    GalleryComponent,
+    CreateGalleryComponent,
+    GalleryDetailComponent,
+    GalleryImageUploadComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
     BsModalModule,
-    FormsModule
+    FormsModule,
+    NgxGalleryModule
   ],
   providers: [
     MenuRequestService,

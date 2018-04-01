@@ -1,7 +1,15 @@
 package com.helospark.site.core.web.gallery.response;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+@JsonDeserialize(builder = GalleryImage.Builder.class)
 public class GalleryImage {
     private String title;
     private String description;
@@ -43,11 +51,29 @@ public class GalleryImage {
         return new Builder();
     }
 
-    @Generated("SparkTools")
-    public static Builder builderFrom(GalleryImage galleryImages) {
-        return new Builder(galleryImages);
+    @Override
+    public boolean equals(final Object other) {
+        if (!(other instanceof GalleryImage)) {
+            return false;
+        }
+        GalleryImage castOther = (GalleryImage) other;
+        return Objects.equals(title, castOther.title) && Objects.equals(description, castOther.description)
+                && Objects.equals(thumbnailUrl, castOther.thumbnailUrl) && Objects.equals(largeUrl, castOther.largeUrl)
+                && Objects.equals(originalUrl, castOther.originalUrl);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, description, thumbnailUrl, largeUrl, originalUrl);
+    }
+
+    //TODO: Generate after https://bugs.eclipse.org/bugs/show_bug.cgi?id=521995 is resolved
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
+    }
+
+    @JsonPOJOBuilder
     @Generated("SparkTools")
     public static final class Builder {
         private String title;

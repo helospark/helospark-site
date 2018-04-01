@@ -9,11 +9,13 @@ import com.helospark.site.core.web.user.domain.Token;
 public class AuthenticationResult {
     private Token authenticationToken;
     private Token refreshToken;
+    private boolean isAdmin;
 
     @Generated("SparkTools")
     private AuthenticationResult(Builder builder) {
         this.authenticationToken = builder.authenticationToken;
         this.refreshToken = builder.refreshToken;
+        this.isAdmin = builder.isAdmin;
     }
 
     public Token getAuthenticationToken() {
@@ -24,27 +26,22 @@ public class AuthenticationResult {
         return refreshToken;
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
     @Generated("SparkTools")
     public static Builder builder() {
         return new Builder();
     }
 
     @Generated("SparkTools")
-    public static Builder builderFrom(AuthenticationResult loginResponse) {
-        return new Builder(loginResponse);
-    }
-
-    @Generated("SparkTools")
     public static final class Builder {
         private Token authenticationToken;
         private Token refreshToken;
+        private boolean isAdmin;
 
         private Builder() {
-        }
-
-        private Builder(AuthenticationResult loginResponse) {
-            this.authenticationToken = loginResponse.authenticationToken;
-            this.refreshToken = loginResponse.refreshToken;
         }
 
         public Builder withAuthenticationToken(Token authenticationToken) {
@@ -54,6 +51,11 @@ public class AuthenticationResult {
 
         public Builder withRefreshToken(Token refreshToken) {
             this.refreshToken = refreshToken;
+            return this;
+        }
+
+        public Builder withIsAdmin(boolean isAdmin) {
+            this.isAdmin = isAdmin;
             return this;
         }
 

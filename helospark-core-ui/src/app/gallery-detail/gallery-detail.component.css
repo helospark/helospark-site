@@ -1,0 +1,37 @@
+
+a:hover img {
+   filter: brightness(1.2);
+}
+
+::ng-deep .ngx-gallery-thumbnail {
+    margin-bottom: 4px;
+}
+
+::ng-deep  .ngx-gallery-thumbnail {
+    border: 5px #eee solid;
+    background-color: #eee;
+    border-bottom: 13px #eee solid;
+    overflow: hidden;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.7);
+    text-align: center;
+    font-family: Purisa, arial;
+    font-size: 12pt;
+    font-weight: bold;
+    color: black;
+    transform: rotate(-0.8deg);
+    -webkit-backface-visibility: hidden;
+}
+
+::ng-deep .ngx-gallery-thumbnail:nth-child(even) {
+    transform: rotate(1.6deg);
+    -webkit-backface-visibility: hidden;
+}
+
+.image a {
+    text-decoration: none;
+}
+
+@font-face {
+    font-family: 'Purisa';
+    src: local('Purisa'), url('/resources/fonts/Purisa.ttf') format('truetype');
+}

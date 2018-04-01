@@ -37,6 +37,6 @@
     </div>
   </div>
   <div *ngIf="comment.childrenLoaded == true">
-    <app-comment-section #childCommentComponent (commentsLoaded)="addChild(comment.id, childCommentComponent)" [articleId]="articleId" [level]="addNumbers(levelValue, 1)" [parentCommentId]="comment.id"></app-comment-section>
+    <app-comment-section (commentsLoaded)="addChild(comment.id, childCommentComponent)" [articleId]="articleId" [level]="addNumbers(levelValue, 1)" [parentCommentId]="comment.id"></app-comment-section>
   </div>
 </ng-container>

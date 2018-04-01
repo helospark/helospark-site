@@ -2,9 +2,15 @@ package com.helospark.site.core.web.gallery.response;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(builder = GetGalleryResponse.Builder.class)
 public class GetGalleryResponse {
     private String id;
     private String title;
@@ -40,9 +46,25 @@ public class GetGalleryResponse {
         return new Builder();
     }
 
-    @Generated("SparkTools")
-    public static Builder builderFrom(GetGalleryResponse galleryImageResponse) {
-        return new Builder(galleryImageResponse);
+    @Override
+    public boolean equals(final Object other) {
+        if (!(other instanceof GetGalleryResponse)) {
+            return false;
+        }
+        GetGalleryResponse castOther = (GetGalleryResponse) other;
+        return Objects.equals(id, castOther.id) && Objects.equals(title, castOther.title) && Objects.equals(description, castOther.description)
+                && Objects.equals(images, castOther.images);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description, images);
+    }
+
+    //TODO: Generate after https://bugs.eclipse.org/bugs/show_bug.cgi?id=521995 is resolved
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
 
     @Generated("SparkTools")

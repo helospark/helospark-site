@@ -250,6 +250,41 @@
           }
         ]
       }
+    },
+    {
+      "changeSet": {
+        "id": "11",
+        "author": "helospark",
+        "changes": [
+          {
+            "sql": {
+              "comment": "Authorities",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "CREATE TABLE authority (id int NOT NULL, role VARCHAR(30) NOT NULL, PRIMARY KEY (id))",
+              "stripComments": true
+            }
+          },
+          {
+            "sql": {
+              "comment": "Authorities",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "INSERT INTO authority (id, role) VALUES (1, 'ROLE_USER'), (2, 'ROLE_ADMIN')",
+              "stripComments": true
+            }
+          },
+          {
+            "sql": {
+              "comment": "Authorities",
+              "dbms": "h2, mysql",
+              "splitStatements": true,
+              "sql": "CREATE TABLE user_authority (user_id int NOT NULL, authority_id int NOT NULL, FOREIGN KEY (user_id) REFERENCES application_user(id), FOREIGN KEY (authority_id) REFERENCES authority(id))",
+              "stripComments": true
+            }
+          }
+        ]
+      }
     }
   ]
 }

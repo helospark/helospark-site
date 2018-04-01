@@ -1,0 +1,7 @@
+Upload an image
+<form>
+    Title<input [(ngModel)]="request.title" name="title" /><br>
+    Description: <textarea [(ngModel)]="request.description" name="description"></textarea><br>
+    File: <input #imageUploadInput type="file" name="image" id="image" /><br>
+    <button type="button" class="btn btn-primary" (click)="uploadImage()" >Send</button>
+</form>

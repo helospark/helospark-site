@@ -12,7 +12,11 @@ export class AuthenticationStoreService {
   constructor() {
     var result = localStorage.getItem(this.tokenKey);
     if (result) {
-      this.authenticationTokens = JSON.parse(result);
+      try {
+        this.authenticationTokens = JSON.parse(result);
+      } catch (e) {
+        console.log("Cannot parse json " + e);
+      }
     }
   }
 
@@ -64,6 +68,10 @@ export class AuthenticationStoreService {
 
   isLoggedOut():boolean {
     return !this.isLoggedIn();
+  }
+
+  isAdmin():boolean {
+    return this.isLoggedIn() && this.authenticationTokens.admin;
   }
 
   private isTokenValid(token:Token):boolean {

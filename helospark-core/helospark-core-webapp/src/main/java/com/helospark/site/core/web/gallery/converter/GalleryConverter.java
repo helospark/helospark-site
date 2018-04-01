@@ -42,6 +42,7 @@ public class GalleryConverter {
     public GalleryListEntryResponse convert(GalleryEntity entity) {
         return GalleryListEntryResponse.builder()
                 .withId(entity.getId())
+                .withTitle(entity.getTitle())
                 .withThumbnailUrl(convertOptionalImage(entity.getThumbnail()))
                 .build();
     }
@@ -56,7 +57,7 @@ public class GalleryConverter {
         return GetGalleryResponse.builder()
                 .withId(gallery.getId())
                 .withDescription(gallery.getDescription())
-                .withTitle(gallery.getDescription())
+                .withTitle(gallery.getTitle())
                 .withImages(convertImages(gallery.getImages()))
                 .build();
     }

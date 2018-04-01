@@ -1,0 +1,12 @@
+   
+<h1>{{imageDetails.title}}- Image gallery</h1>
+<div class="content_box">
+    {{imageDetails.description}}
+</div>
+<div *ngIf="authenticationStore.isAdmin()">
+    <a [routerLink]="['upload']" class="btn btn-primary">Upload image</a>
+</div>
+<div id="image-list">
+
+    <ngx-gallery #gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+</div>

@@ -27,7 +27,7 @@ public class LocalFileSystemBasedImageDao {
 
     public LocalFileSystemBasedImageDao(FileIdToFilePathRepository fileIdToFilePathRepository,
             CurrentTimeProvider currentTimeProvider,
-            @Value("image.localfilesystem.basepath") String filePath) {
+            @Value("${image.localfilesystem.basepath}") String filePath) {
         this.fileIdToFilePathRepository = fileIdToFilePathRepository;
         this.currentTimeProvider = currentTimeProvider;
         this.filePath = filePath;

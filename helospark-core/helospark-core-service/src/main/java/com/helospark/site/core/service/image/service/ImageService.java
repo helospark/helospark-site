@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.helospark.site.core.common.image.form.GetImageForm;
+import com.helospark.site.core.service.common.UrlFriendlyIdFinder;
 import com.helospark.site.core.service.image.ForbiddenToResizeImageException;
 import com.helospark.site.core.service.image.dao.LocalFileSystemBasedImageDao;
 import com.helospark.site.core.service.image.repository.ImageEntity;
@@ -23,6 +24,7 @@ public class ImageService {
     private ImageRepository imageRepository;
     private ImageResizerService imageResizerService;
     private ImageResizerHashCalculator hashCalculator;
+    private UrlFriendlyIdFinder urlFriendlyIdFinder;
 
     public ImageService(LocalFileSystemBasedImageDao imageDao, ImageRepository imageRepository, ImageResizerService imageResizerService,
             ImageResizerHashCalculator hashCalculator) {
@@ -39,14 +41,13 @@ public class ImageService {
         return convertToJpg(resizedImage);
     }
 
-    public ImageEntity save(MultipartFile multipartFile) {
+    public ImageEntity save(String id, MultipartFile multipartFile) {
         try {
-            String originalName = multipartFile.getOriginalFilename();
             ByteArrayInputStream bais = new ByteArrayInputStream(multipartFile.getBytes());
             BufferedImage image = ImageIO.read(bais);
 
             ImageEntity imageEntity = new ImageEntity();
-            imageEntity.setId(originalName); // generate the id
+            imageEntity.setId(id);
             imageEntity.setWidth(image.getWidth());
             imageEntity.setHeight(image.getHeight());
 
@@ -70,7 +71,7 @@ public class ImageService {
 
     private void assertHashIsValid(@Valid GetImageForm form) {
         String hash = hashCalculator.getHash(form.getImageId(), form.getWidth(), form.getHeight());
-        if (hash.equals(form.getHash())) {
+        if (!hash.equals(form.getHash())) {
             throw new ForbiddenToResizeImageException();
         }
     }

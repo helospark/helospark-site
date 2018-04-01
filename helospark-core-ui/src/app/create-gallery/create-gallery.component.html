@@ -1,0 +1,7 @@
+<h1>Create an image gallery</h1>
+
+<form>
+    Title: <input name="title" [(ngModel)]="request.title" /><br>
+    Description <textarea name="description" [(ngModel)]="request.description"></textarea><br>
+    <button type="button" class="btn btn-primary" (click)="createGallery()">Create</button>
+</form>

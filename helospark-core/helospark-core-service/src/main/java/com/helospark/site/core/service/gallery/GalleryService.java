@@ -1,7 +1,5 @@
 package com.helospark.site.core.service.gallery;
 
-import java.time.format.DateTimeFormatter;
-
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Service;
@@ -9,9 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.helospark.site.core.common.gallery.request.CreateGalleryRequest;
-import com.helospark.site.core.service.common.AuthorizedForAdmin;
-import com.helospark.site.core.service.common.CurrentTimeProvider;
-import com.helospark.site.core.service.common.UrlClearer;
+import com.helospark.site.core.service.common.UrlFriendlyIdFinder;
 import com.helospark.site.core.service.gallery.domain.GalleryEntity;
 import com.helospark.site.core.service.gallery.domain.GalleryImageEntity;
 import com.helospark.site.core.service.gallery.repository.GalleryEntityRepository;
@@ -25,16 +21,14 @@ public class GalleryService {
     private GalleryEntityRepository galleryEntityRepository;
     private GalleryImageEntityRepository galleryImageEntityRepository;
     private ImageService imageService;
-    private UrlClearer urlClearer;
-    private CurrentTimeProvider currentTimeProvider;
+    private UrlFriendlyIdFinder urlFriendlyIdFinder;
 
     public GalleryService(GalleryEntityRepository galleryEntityRepository, GalleryImageEntityRepository galleryImageEntityRepository,
-            ImageService imageService, UrlClearer urlClearer, CurrentTimeProvider currentTimeProvider) {
+            ImageService imageService, UrlFriendlyIdFinder urlFriendlyIdFinder) {
         this.galleryEntityRepository = galleryEntityRepository;
         this.galleryImageEntityRepository = galleryImageEntityRepository;
         this.imageService = imageService;
-        this.urlClearer = urlClearer;
-        this.currentTimeProvider = currentTimeProvider;
+        this.urlFriendlyIdFinder = urlFriendlyIdFinder;
     }
 
     public Iterable<GalleryEntity> getAllGalleries() {
@@ -42,7 +36,7 @@ public class GalleryService {
     }
 
     public GalleryEntity createGallery(CreateGalleryRequest request) {
-        String id = findUniqueId(request.getTitle());
+        String id = urlFriendlyIdFinder.createId(galleryEntityRepository, request.getTitle());
         GalleryEntity entity = convertToGalleryEntity(request, id);
         return galleryEntityRepository.save(entity);
     }
@@ -60,33 +54,17 @@ public class GalleryService {
         return entity;
     }
 
-    private String findUniqueId(String title) {
-        String clearedTitle = urlClearer.clearString(title).toLowerCase();
-        if (clearedTitle.length() < 2) {
-            clearedTitle = clearedTitle + currentTimeProvider.currentLocalDateTime().format(DateTimeFormatter.ISO_DATE);
-        }
-        for (int i = 0; i < 10; ++i) {
-            String tmpTitle = clearedTitle;
-            if (i != 0) {
-                tmpTitle += "-" + i;
-            }
-            if (!galleryEntityRepository.findById(tmpTitle).isPresent()) {
-                return tmpTitle;
-            }
-        }
-        throw new CannotFindValidId("Cannot find valid ID for the article");
-    }
-
     @Transactional
-    @AuthorizedForAdmin
+    //    @AuthorizedForAdmin // TODO
     public GalleryImageEntity saveImage(@Valid GalleryImageUploadRequest request) {
         MultipartFile multipartFile = request.getFile();
         GalleryEntity gallery = this.findGallery(request.getGalleryId());
+        String imageId = urlFriendlyIdFinder.createId(galleryImageEntityRepository, request.getTitle());
 
-        ImageEntity imageEntity = imageService.save(multipartFile);
+        ImageEntity imageEntity = imageService.save(imageId, multipartFile);
 
         GalleryImageEntity entity = new GalleryImageEntity();
-        entity.setId(request.getTitle()); // TODO: generate id
+        entity.setId(imageId);
         entity.setImageEntity(imageEntity);
         entity.setTitle(request.getTitle());
         entity.setGallery(gallery);

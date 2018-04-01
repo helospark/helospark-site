@@ -23,7 +23,9 @@
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
-        "../node_modules/bootstrap/js/modal.js"
+        "../node_modules/bootstrap/js/modal.js",
+        "../node_modules/ngx-gallery/bundles/ngx-gallery.umd.js",
+        "../node_modules/hammerjs/src/hammer.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
