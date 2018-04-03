@@ -34,6 +34,7 @@ import { CreateGalleryComponent } from './create-gallery/create-gallery.componen
 import { GalleryDetailComponent } from './gallery-detail/gallery-detail.component';
 import { GalleryImageUploadComponent } from './gallery-image-upload/gallery-image-upload.component';
 import { NgxGalleryModule } from 'ngx-gallery';
+import { RegistrationComponent } from './registration/registration.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -62,7 +63,8 @@ const routes: Routes = [
     GalleryComponent,
     CreateGalleryComponent,
     GalleryDetailComponent,
-    GalleryImageUploadComponent
+    GalleryImageUploadComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

@@ -36,11 +36,6 @@ export class RestCommunicatorService {
     } else if (this.authenticationStore.isReloginRequired()) {
       return this.relogin()
         .mergeMap(ignored => restCall); 
-    /** tmp */
-    } else if (this.authenticationStore.isLoggedOut()) {
-      return this.relogin()
-        .mergeMap(ignored => restCall);
-    /** tmp end */
     } else {
       return restCall;
     }

@@ -38,7 +38,7 @@ public class AuthenticationHappyFlowIT {
         HttpEntity<String> entity = provideRegistrationRequestEntity("user1");
 
         // WHEN
-        ResponseEntity<Void> response = restTemplate.exchange("/users/register", HttpMethod.POST, entity, Void.class);
+        ResponseEntity<String> response = restTemplate.exchange("/users/register", HttpMethod.POST, entity, String.class);
 
         // THEN
         assertThat(response.getStatusCodeValue(), is(200));

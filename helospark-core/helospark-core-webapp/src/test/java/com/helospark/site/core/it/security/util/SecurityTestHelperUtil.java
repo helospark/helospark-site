@@ -14,7 +14,14 @@ import com.helospark.site.core.web.security.domain.AuthenticationResult;
 public class SecurityTestHelperUtil {
 
     public static HttpEntity<String> provideRegistrationRequestEntity(String userName) {
-        String body = "{\"username\":\"" + userName + "\", \"password\":\"password\"}";
+        String body = "{\"username\":\"" + userName + "\", \"password\":\"password1\", \"passwordAgain\": \"password1\"}";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new HttpEntity<>(body, headers);
+    }
+
+    public static HttpEntity<String> provideRegistrationRequestEntity(String userName, String password, String passwordAgain) {
+        String body = "{\"username\":\"" + userName + "\", \"password\":\"" + password + "\", \"passwordAgain\": \"" + passwordAgain + "\"}";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         return new HttpEntity<>(body, headers);
